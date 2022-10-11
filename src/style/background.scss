@@ -1,0 +1,7 @@
+@import './colors';
+
+.bg {
+    &--red {
+        background-color: $c-red;
+    }
+}
