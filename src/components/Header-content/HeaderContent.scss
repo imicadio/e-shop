@@ -1,3 +1,27 @@
+@import "bulma/sass/utilities/mixins";
+
 .navbar__logo {
-    max-height: 40px !important;
+  max-height: 40px !important;
+}
+
+.header__content {
+  margin-bottom: 8px !important;
+
+  @include desktop {
+    height: 100px;
+    margin-bottom: unset !important;
+  }
+}
+
+.header__search-wrapper {
+  @include touch {
+    flex: none !important;
+    width: 100%;
+    order: 3;
+  }
+}
+
+.header__action-bag {
+  height: 100%;
+  aspect-ratio: 1;
 }
