@@ -1,10 +1,23 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { Header, Footer } from './components/index';
+import { Home, Contact } from './pages/index';
+
+import './style/index.scss';
 import "./App.scss";
 
 function App() {
   return (
-    <div>
-      <h1>Hello World!!!</h1>
-    </div>
+    <>
+      <BrowserRouter>
+        <Header />
+          <Routes>
+            <Route path="/" element={ <Home /> } />
+            <Route path="/contact" element={ <Contact /> } />
+          </Routes>
+        <Footer />
+      </BrowserRouter>
+    </>
   );
 }
 
