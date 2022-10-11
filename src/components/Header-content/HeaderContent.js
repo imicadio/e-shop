@@ -7,7 +7,6 @@ import Search from "../Search/Search";
 import "./HeaderContent.scss";
 
 export default function headerContent() {
-
   const openMobileMenu = () => {
     const isActive = "is-active";
 
@@ -23,7 +22,6 @@ export default function headerContent() {
   return (
     <Container customClass="header__content">
       <div className="navbar-brand columns m-0 is-flex-wrap-wrap full-height">
-
         {/* LOGO */}
         <a href="/" className="column navbar-item is-3 is-flex">
           <img
@@ -39,7 +37,9 @@ export default function headerContent() {
         {/* BTN LOGIN */}
         <div className="column is-3 is-hidden-touch is-flex is-align-items-center is-justify-content-flex-end">
           <div className="mr-2">
-            <p className="is-size-7 has-text-weight-medium">Don't have an account?</p>
+            <p className="is-size-7 has-text-weight-medium">
+              Don't have an account?
+            </p>
             <p className="has-text-weight-semibold">Join us REGISTER!</p>
           </div>
           <Button customClass="" link="/login" text="Login" />
@@ -62,7 +62,6 @@ export default function headerContent() {
           </span>
         </div>
       </div>
-      
     </Container>
   );
 }

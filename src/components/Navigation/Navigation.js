@@ -1,26 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Container from "../../layout/Container/Container";
 
 const Navigation = () => {
   return (
     <div className="border-top border-bottom navbar-menu" id="navbarMainMenu">
       <Container customClass="px-3">
-        <div class="navbar-start">
-          <a class="navbar-item">Home</a>
+        <div className="navbar-start">
+          <Link to="/" className="navbar-item"><i class="fa-solid fa-house-chimney text-color-red"></i></Link>
+          <Link to="/products" className="navbar-item">Products</Link>
 
-          <a class="navbar-item">Documentation</a>
+          {/* <div className="navbar-item has-dropdown is-hoverable">
+            <Link className="navbar-link">More</Link>
 
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">More</a>
-
-            <div class="navbar-dropdown">
-              <a class="navbar-item">About</a>
-              <a class="navbar-item">Jobs</a>
-              <a class="navbar-item">Contact</a>
-              <hr class="navbar-divider" />
-              <a class="navbar-item">Report an issue</a>
+            <div className="navbar-dropdown">
+              <Link className="navbar-item">About</Link>
+              <Link className="navbar-item">Jobs</Link>
+              <Link className="navbar-item">Contact</Link>
+              <hr className="navbar-divider" />
+              <Link className="navbar-item">Report an issue</Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </Container>
     </div>
