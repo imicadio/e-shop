@@ -1,15 +1,18 @@
 @import "bulma/sass/utilities/mixins";
+@import '../../style/index';
 
 .navbar__logo {
   max-height: 40px !important;
 }
 
 .header__content {
-  margin-bottom: 8px !important;
+  padding-bottom: 8px;
+  border-bottom: $border-1;
 
   @include desktop {
     height: 100px;
-    margin-bottom: unset !important;
+    padding-bottom: unset;
+    border-bottom: unset;
   }
 }
 

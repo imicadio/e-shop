@@ -13,7 +13,7 @@ const Navigation = () => {
   // const activeLink = (pathname === "/") ? "active navbar-item" : "";
 
   return (
-    <div className="border-top border-bottom navbar-menu" id="navbarMainMenu">
+    <div className="border-top border-bottom navbar-menu header__navigation" id="navbarMainMenu">
       <Container customClass="px-3">
         <div className="navbar-start">
           <NavLink to="/" className="navbar-item" end>

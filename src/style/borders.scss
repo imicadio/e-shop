@@ -1,11 +1,13 @@
 @import './colors';
 
+$border-1: 1px solid $c-gray-d8;
+
 .border {
     &-top {
-        border-top: 1px solid $c-gray-d8;
+        border-top: $border-1;
     }
 
     &-bottom {
-        border-bottom: 1px solid $c-gray-d8;
+        border-bottom: $border-1;
     }
 }
