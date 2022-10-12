@@ -1,0 +1,7 @@
+@import '../../style/index';
+
+.navbar-item{
+    &.active {
+        background-color: $c-white-dark;
+    }
+}

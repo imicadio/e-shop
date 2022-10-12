@@ -1,14 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import Container from "../../layout/Container/Container";
 
+import './Navigation.scss';
+
 const Navigation = () => {
+  // const location = useLocation();
+  // const { pathname } = location;
+
+  // console.log(pathname == '/');
+
+  // const activeLink = (pathname === "/") ? "active navbar-item" : "";
+
   return (
     <div className="border-top border-bottom navbar-menu" id="navbarMainMenu">
       <Container customClass="px-3">
         <div className="navbar-start">
-          <Link to="/" className="navbar-item"><i class="fa-solid fa-house-chimney text-color-red"></i></Link>
-          <Link to="/products" className="navbar-item">Products</Link>
+          <NavLink to="/" className="navbar-item" end>
+            <i class="fa-solid fa-house-chimney text-color-red"></i>
+          </NavLink>
+          <NavLink to="/products" className="navbar-item">
+            Products
+          </NavLink>
 
           {/* <div className="navbar-item has-dropdown is-hoverable">
             <Link className="navbar-link">More</Link>
