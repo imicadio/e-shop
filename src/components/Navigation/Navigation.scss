@@ -1,0 +1,38 @@
+@import "bulma/sass/utilities/mixins";
+@import "../../style/index";
+
+.header__navigation {
+  .navbar-item {
+    &.active {
+      background-color: $c-white-dark;
+
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: $c-red;
+      }
+    }
+
+    &:after {
+      @include desktop {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 5px;
+        bottom: 5px;
+        width: 1px;
+        background-color: $c-gray-d8;
+      }
+    }
+
+    &:last-child {
+      &::after {
+        content: none;
+      }
+    }
+  }
+}

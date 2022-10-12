@@ -1,0 +1,7 @@
+@import './colors';
+
+.text-color {
+    &-red {
+        color: $c-red;
+    }
+}

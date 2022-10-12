@@ -1,0 +1,17 @@
+
+@charset "utf-8";
+@import './colors';
+
+$primary: $c-red;
+
+$radius-small: 0;
+$radius: 0;
+$radius-large: 0;
+
+// NAVBAR 
+$navbar-item-hover-color: $c-black-middle;
+$navbar-item-hover-background-color: $c-white-dark;
+$navbar-item-active-color: $c-white-dark;
+$navbar-item-active-background-color: $c-white-dark;
+
+@import "../../node_modules/bulma/bulma.sass";
