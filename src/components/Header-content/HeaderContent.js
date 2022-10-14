@@ -1,7 +1,7 @@
 import React from "react";
 
 import Container from "../../layout/Container/Container";
-import Button from "../Button/Button";
+import LinkTo from "../LinkTo/LinkTo";
 import Search from "../Search/Search";
 
 import "./HeaderContent.scss";
@@ -40,9 +40,12 @@ export default function headerContent() {
             <p className="is-size-7 has-text-weight-medium">
               Don't have an account?
             </p>
-            <p className="has-text-weight-semibold">Join us REGISTER!</p>
+            <p className="has-text-weight-semibold">
+              Join us <LinkTo customClass="has-text-weight-bold" link="/register" text="Register" />!
+            </p>
           </div>
-          <Button customClass="" link="/login" text="Login" />
+
+          <LinkTo customClass="button is-primary" link="/login" text="Login" />
         </div>
 
         {/* RESPONSIVE BUTTON */}
