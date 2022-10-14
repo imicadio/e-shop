@@ -49,8 +49,7 @@ const Login = () => {
             <TextField
               id="loginName"
               label="Email"
-              variant="standard"
-              fullwidth
+              variant="standard"              
               sx={{
                 width: "100%",
               }}
@@ -61,8 +60,7 @@ const Login = () => {
               id="loginPassword"
               label="Password"
               variant="standard"
-              type="password"
-              fullwidth
+              type="password"              
               sx={{
                 width: "100%",
                 my: 3,
