@@ -47,7 +47,7 @@ export default function headerContent() {
 
         {/* RESPONSIVE BUTTON */}
         <div className="header__btn-actions-wrapper is-hidden-desktop column is-flex is-justify-content-end p-0">
-          <i class="fa-solid fa-bag-shopping is-flex is-justify-content-center is-align-items-center header__action-bag"></i>
+          <i className="fa-solid fa-bag-shopping is-flex is-justify-content-center is-align-items-center header__action-bag"></i>
           <span
             role="button"
             className="navbar-burger burger ml-0 full-height"

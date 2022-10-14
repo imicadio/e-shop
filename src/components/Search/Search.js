@@ -11,7 +11,7 @@ const Search = ({ customClass }) => {
       </div>
       <div className="control">
         <a className="button is-primary">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
           <span className="has-text-weight-semibold ml-2 is-hidden-touch">
             Search
           </span>

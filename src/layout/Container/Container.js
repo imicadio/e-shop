@@ -1,6 +1,8 @@
 import React from 'react'
 import classnames from 'classnames';
 
+import './Container.scss';
+
 const CONTAINER_CLASS_NAME = 'container';
 
 const Container = ({

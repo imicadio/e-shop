@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Container from "../../layout/Container/Container";
 
 import './Navigation.scss';
@@ -17,7 +17,7 @@ const Navigation = () => {
       <Container customClass="px-3">
         <div className="navbar-start">
           <NavLink to="/" className="navbar-item" end>
-            <i class="fa-solid fa-house-chimney text-color-red"></i>
+            <i className="fa-solid fa-house-chimney text-color-red"></i>
           </NavLink>
           <NavLink to="/products" className="navbar-item">
             Products
