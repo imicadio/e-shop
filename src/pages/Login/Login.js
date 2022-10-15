@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "../../layout/Container/Container";
 
 import {
@@ -6,7 +6,6 @@ import {
   Button,
   Box,
   Typography,
-  FormControl,
   Divider,
 } from "@mui/material";
 
@@ -14,8 +13,28 @@ import LockIcon from "@mui/icons-material/Lock";
 import SendIcon from "@mui/icons-material/Send";
 import LinkTo from "../../components/LinkTo/LinkTo";
 import GoogleIcon from "@mui/icons-material/Google";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user, '✔✔✔✔✔LOGIN SUCCESS✅✅✅✅✅✅');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage)
+      });
+  };
+
   return (
     <Container element="section" customClass="px-3 py-5">
       <Box
@@ -44,15 +63,17 @@ const Login = () => {
         <Typography variant="h5" component="h2" sx={{ mb: 3 }} align={"center"}>
           Login
         </Typography>
-        <FormControl fullWidth>
+        <form onSubmit={handleLogin}>
           <Box>
             <TextField
               id="loginName"
               label="Email"
-              variant="standard"              
+              variant="standard"
               sx={{
                 width: "100%",
               }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Box>
           <Box>
@@ -60,19 +81,23 @@ const Login = () => {
               id="loginPassword"
               label="Password"
               variant="standard"
-              type="password"              
+              type="password"
               sx={{
                 width: "100%",
                 my: 3,
               }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Box>
           <Button
+            type="submit"
             variant="contained"
             endIcon={<SendIcon />}
             sx={{
               p: 2,
               fontWeight: "bold",
+              width: '100%'
             }}
           >
             Login
@@ -86,7 +111,7 @@ const Login = () => {
             />
             ?
           </p>
-        </FormControl>
+        </form>
         <Divider
           sx={{
             my: 3,

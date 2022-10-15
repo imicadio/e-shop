@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../layout/Container/Container";
 
 import { TextField, Button, Box, Typography, Divider } from "@mui/material";
@@ -6,30 +6,136 @@ import { TextField, Button, Box, Typography, Divider } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import SendIcon from "@mui/icons-material/Send";
 import LinkTo from "../../components/LinkTo/LinkTo";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase/firebase';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { formValid } from "../../shared/formValid";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [submitError, setSubmitError] = useState(false);
+
+  const [form, setForm] = useState({
+    email: {
+      value: "",
+      error: true,
+      type: "email",
+      validPattern: "email",
+      helperText: "Please enter a valid email address",
+    },
+    password: {
+      value: "",
+      error: false,
+      type: "password",
+      validPattern: "password",
+      helperText: "",
+    },
+    cPassword: {
+      value: "",
+      error: false,
+      type: "cPassword",
+      validPattern: "password",
+      helperText: "",
+    },
+  });
+
+  const handleForm = (e) => {
+    const { name: type, value } = e.target;
+
+    setForm((form) => ({
+      ...form,
+      [type]: {
+        ...form[type],
+        value: value,
+      },
+    }));
+  };
+
+  useEffect(() => {
+    const findPasswords = Object.keys(form).filter(
+      (element) => form[element].validPattern === "password"
+    );
+
+    const password1 = findPasswords[0];
+    const password2 = findPasswords[1];
+
+    for (let type in form) {
+      const isConfirmValid = findPasswords.find((element) => element === type);
+
+      if (isConfirmValid) {
+        const correctPassword = formValid(
+          form[type].validPattern,
+          form[type].value
+        );
+        const samePassword = form[password1].value === form[password2].value;
+
+        if (correctPassword) {
+          setForm((form) => ({
+            ...form,
+            [type]: {
+              ...form[type],
+              error: formValid(form[type].validPattern, form[type].value),
+              helperText:
+                "Minimum eight characters, at least one letter and one number.",
+            },
+          }));
+        } else if (samePassword) {
+          setForm((form) => ({
+            ...form,
+            [type]: {
+              ...form[type],
+              error: formValid(form[type].validPattern, form[type].value),
+              helperText: "",
+            },
+          }));
+        } else {
+          setForm((form) => ({
+            ...form,
+            [password1]: {
+              ...form[password1],
+              error: true,
+              helperText: "",
+            },
+            [password2]: {
+              ...form[password2],
+              error: true,
+              helperText: "Password must be the same",
+            },
+          }));
+        }
+      } else {
+        setForm((form) => ({
+          ...form,
+          [type]: {
+            ...form[type],
+            error: formValid(form[type].validPattern, form[type].value),
+          },
+        }));
+      }
+    }
+  }, [form.email.value, form.password.value, form.cPassword.value]);
 
   const registerUser = (e) => {
     e.preventDefault();
-    console.log(email, password, confirmPassword);
+    const { email, password, cPassword } = form;
 
-    if (password !== confirmPassword) return console.log('🥴🥴🥴ERROR🥴🥴🥴');
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user, '✔✔✔✔✔✅✅✅✅✅✅');
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage)
-        });
-    
+    const { value: emailValue, valid: emailvalid } = email;
+    const { value: passwordValue, valid: passwordvalid } = password;
+    const { value: cPasswordValue } = cPassword;
+
+    if (!emailvalid || passwordValue !== cPasswordValue || !passwordvalid) {
+      setSubmitError(true);
+      return console.log("🥴🥴🥴ERROR🥴🥴🥴");
+    }
+
+    // createUserWithEmailAndPassword(auth, emailValue, passwordValue)
+    //   .then((userCredential) => {
+    //     const user = userCredential.user;
+    //     console.log(user, '✔✔✔✔✔✅✅✅✅✅✅');
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.log(errorCode, errorMessage)
+    //   });
   };
 
   return (
@@ -69,9 +175,12 @@ const Register = () => {
               sx={{
                 width: "100%",
               }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name={form.email.type}
+              value={form.email.value}
+              onChange={handleForm}
               required
+              error={submitError ? form.email.error : false}
+              helperText={submitError ? form.email.helperText : false}
             />
           </Box>
           <Box>
@@ -84,9 +193,12 @@ const Register = () => {
                 width: "100%",
                 my: 3,
               }}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name={form.password.type}
+              value={form.password.value}
+              onChange={handleForm}
               required
+              error={submitError ? form.password.error : false}
+              helperText={submitError ? form.password.helperText : false}
             />
           </Box>
           <Box>
@@ -99,9 +211,12 @@ const Register = () => {
                 width: "100%",
                 mb: 3,
               }}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              name={form.cPassword.type}
+              value={form.cPassword.value}
+              onChange={handleForm}
               required
+              error={submitError ? form.cPassword.error : false}
+              helperText={submitError ? form.cPassword.helperText : false}
             />
           </Box>
           <Button
