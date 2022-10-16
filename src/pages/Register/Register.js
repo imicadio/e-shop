@@ -9,14 +9,19 @@ import LinkTo from "../../components/LinkTo/LinkTo";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { formValid } from "../../shared/formValid";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const [submitError, setSubmitError] = useState(false);
 
+  const navigation = useNavigate();
+
   const [form, setForm] = useState({
     email: {
       value: "",
-      error: true,
+      error: false,
       type: "email",
       validPattern: "email",
       helperText: "Please enter a valid email address",
@@ -65,10 +70,7 @@ const Register = () => {
           form[type].validPattern,
           form[type].value
         );
-        const samePassword = form[password1].value === form[password2].value;
-
-
-        console.log(type, correctPassword, form[type].value)
+        const samePassword = form[password1].value === form[password2].value;        
 
         if (correctPassword) {
           setForm((form) => ({
@@ -124,25 +126,26 @@ const Register = () => {
     const { value: emailValue, error: emailvalid } = email;
     const { value: passwordValue, error: passwordvalid } = password;
 
-    console.log(emailvalid, passwordvalid)
+    console.log(emailvalid || passwordvalid)
     if (emailvalid || passwordvalid) {
-      setSubmitError(true);
+      toast.error('bad request')
+      return setSubmitError(true);
     }
 
     createUserWithEmailAndPassword(auth, emailValue, passwordValue)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user, '✔✔✔✔✔✅✅✅✅✅✅');
+        toast.success('Succes Register...')
+        navigation('/');
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage)
+        toast.error(error.message)
       });
   };
 
   return (
     <Container element="section" customClass="px-3 py-5">
+      <ToastContainer />
       <Box
         sx={{
           mx: "auto",
@@ -183,7 +186,7 @@ const Register = () => {
               onChange={handleForm}
               required
               error={submitError ? form.email.error : false}
-              helperText={!submitError || form.email.error ? form.email.helperText : false}
+              helperText={submitError && form.email.error ? form.email.helperText : false}
             />
           </Box>
           <Box>
