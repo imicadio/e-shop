@@ -67,6 +67,9 @@ const Register = () => {
         );
         const samePassword = form[password1].value === form[password2].value;
 
+
+        console.log(type, correctPassword, form[type].value)
+
         if (correctPassword) {
           setForm((form) => ({
             ...form,
@@ -82,7 +85,7 @@ const Register = () => {
             ...form,
             [type]: {
               ...form[type],
-              error: formValid(form[type].validPattern, form[type].value),
+              error: false,
               helperText: "",
             },
           }));
@@ -101,12 +104,13 @@ const Register = () => {
             },
           }));
         }
+
       } else {
         setForm((form) => ({
           ...form,
           [type]: {
             ...form[type],
-            error: formValid(form[type].validPattern, form[type].value),
+            error: formValid(form[type].validPattern, form[type].value)
           },
         }));
       }
@@ -115,27 +119,26 @@ const Register = () => {
 
   const registerUser = (e) => {
     e.preventDefault();
-    const { email, password, cPassword } = form;
+    const { email, password } = form;
 
-    const { value: emailValue, valid: emailvalid } = email;
-    const { value: passwordValue, valid: passwordvalid } = password;
-    const { value: cPasswordValue } = cPassword;
+    const { value: emailValue, error: emailvalid } = email;
+    const { value: passwordValue, error: passwordvalid } = password;
 
-    if (!emailvalid || passwordValue !== cPasswordValue || !passwordvalid) {
+    console.log(emailvalid, passwordvalid)
+    if (emailvalid || passwordvalid) {
       setSubmitError(true);
-      return console.log("🥴🥴🥴ERROR🥴🥴🥴");
     }
 
-    // createUserWithEmailAndPassword(auth, emailValue, passwordValue)
-    //   .then((userCredential) => {
-    //     const user = userCredential.user;
-    //     console.log(user, '✔✔✔✔✔✅✅✅✅✅✅');
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log(errorCode, errorMessage)
-    //   });
+    createUserWithEmailAndPassword(auth, emailValue, passwordValue)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user, '✔✔✔✔✔✅✅✅✅✅✅');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage)
+      });
   };
 
   return (
@@ -180,7 +183,7 @@ const Register = () => {
               onChange={handleForm}
               required
               error={submitError ? form.email.error : false}
-              helperText={submitError ? form.email.helperText : false}
+              helperText={!submitError || form.email.error ? form.email.helperText : false}
             />
           </Box>
           <Box>
