@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 const Loader = () => {
   return ReactDOM.createPortal(
     <div className="lds-wrapper">
-      <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+      <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
     </div>,
     document.getElementById("loader")
   );
