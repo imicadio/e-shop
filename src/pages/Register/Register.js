@@ -10,13 +10,17 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { formValid } from "../../shared/formValid";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../components/Loader/Loader";
 
 const Register = () => {
   const [submitError, setSubmitError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigate();
+
+  const renderLoader = isLoading && <Loader />;
 
   const [form, setForm] = useState({
     email: {
@@ -70,7 +74,7 @@ const Register = () => {
           form[type].validPattern,
           form[type].value
         );
-        const samePassword = form[password1].value === form[password2].value;        
+        const samePassword = form[password1].value === form[password2].value;
 
         if (correctPassword) {
           setForm((form) => ({
@@ -106,13 +110,12 @@ const Register = () => {
             },
           }));
         }
-
       } else {
         setForm((form) => ({
           ...form,
           [type]: {
             ...form[type],
-            error: formValid(form[type].validPattern, form[type].value)
+            error: formValid(form[type].validPattern, form[type].value),
           },
         }));
       }
@@ -121,140 +124,156 @@ const Register = () => {
 
   const registerUser = (e) => {
     e.preventDefault();
-    const { email, password } = form;
+    setIsLoading(true);
 
+    const { email, password } = form;
     const { value: emailValue, error: emailvalid } = email;
     const { value: passwordValue, error: passwordvalid } = password;
 
-    console.log(emailvalid || passwordvalid)
+    console.log(emailvalid || passwordvalid);
     if (emailvalid || passwordvalid) {
-      toast.error('bad request')
+      setIsLoading(false);
+      toast.error("Please complete fix form");
       return setSubmitError(true);
     }
 
     createUserWithEmailAndPassword(auth, emailValue, passwordValue)
       .then((userCredential) => {
         const user = userCredential.user;
-        toast.success('Succes Register...')
-        navigation('/');
+        toast.success("Succes Register...");
+        setIsLoading(false);
+        navigation("/");
       })
       .catch((error) => {
-        toast.error(error.message)
+        setIsLoading(false);
+        toast.error(error.message);
       });
   };
 
   return (
-    <Container element="section" customClass="px-3 py-5">
-      <ToastContainer />
-      <Box
-        sx={{
-          mx: "auto",
-          width: {
-            xs: "100%",
-            md: "50%",
-          },
-        }}
-        className="box-shadow-1 p-5"
-      >
-        <Box align="center" my={3}>
-          <Box
-            sx={{
-              display: "inline-grid",
-              bgcolor: "primary.main",
-              color: "primary.contrastText",
-              borderRadius: "50%",
-              p: 1,
-            }}
-          >
-            <LockIcon fontSize="large" />
-          </Box>
-        </Box>
-        <Typography variant="h5" component="h2" sx={{ mb: 3 }} align={"center"}>
-          Register
-        </Typography>
-        <form onSubmit={registerUser}>
-          <Box>
-            <TextField
-              id="registerName"
-              label="Email"
-              variant="standard"
+    <>
+      {renderLoader}
+      <Container element="section" customClass="px-3 py-5">
+        <ToastContainer />
+        <Box
+          sx={{
+            mx: "auto",
+            width: {
+              xs: "100%",
+              md: "50%",
+            },
+          }}
+          className="box-shadow-1 p-5"
+        >
+          <Box align="center" my={3}>
+            <Box
               sx={{
-                width: "100%",
+                display: "inline-grid",
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+                borderRadius: "50%",
+                p: 1,
               }}
-              name={form.email.type}
-              value={form.email.value}
-              onChange={handleForm}
-              required
-              error={submitError ? form.email.error : false}
-              helperText={submitError && form.email.error ? form.email.helperText : false}
-            />
+            >
+              <LockIcon fontSize="large" />
+            </Box>
           </Box>
-          <Box>
-            <TextField
-              id="registerPassword"
-              label="Password"
-              variant="standard"
-              type="password"
-              sx={{
-                width: "100%",
-                my: 3,
-              }}
-              name={form.password.type}
-              value={form.password.value}
-              onChange={handleForm}
-              required
-              error={submitError ? form.password.error : false}
-              helperText={submitError ? form.password.helperText : false}
-            />
-          </Box>
-          <Box>
-            <TextField
-              id="registerConfirmPassword"
-              label="Confirm password"
-              variant="standard"
-              type="password"
-              sx={{
-                width: "100%",
-                mb: 3,
-              }}
-              name={form.cPassword.type}
-              value={form.cPassword.value}
-              onChange={handleForm}
-              required
-              error={submitError ? form.cPassword.error : false}
-              helperText={submitError ? form.cPassword.helperText : false}
-            />
-          </Box>
-          <Button
-            type="submit"
-            variant="contained"
-            endIcon={<SendIcon />}
-            sx={{
-              p: 2,
-              fontWeight: "bold",
-              width: "100%",
-            }}
+          <Typography
+            variant="h5"
+            component="h2"
+            sx={{ mb: 3 }}
+            align={"center"}
           >
             Register
-          </Button>
-        </form>
-        <Divider
-          sx={{
-            my: 3,
-            width: "45%",
-            mx: "auto",
-          }}
-        />
-        <p className="mt-3">
-          Already an account?
-          <LinkTo
-            customClass="has-text-weight-semibold ml-2"
-            text="Login"
-            link="/login"
+          </Typography>
+          <form onSubmit={registerUser}>
+            <Box>
+              <TextField
+                id="registerName"
+                label="Email"
+                variant="standard"
+                sx={{
+                  width: "100%",
+                }}
+                name={form.email.type}
+                value={form.email.value}
+                onChange={handleForm}
+                required
+                error={submitError ? form.email.error : false}
+                helperText={
+                  submitError && form.email.error
+                    ? form.email.helperText
+                    : false
+                }
+              />
+            </Box>
+            <Box>
+              <TextField
+                id="registerPassword"
+                label="Password"
+                variant="standard"
+                type="password"
+                sx={{
+                  width: "100%",
+                  my: 3,
+                }}
+                name={form.password.type}
+                value={form.password.value}
+                onChange={handleForm}
+                required
+                error={submitError ? form.password.error : false}
+                helperText={submitError ? form.password.helperText : false}
+              />
+            </Box>
+            <Box>
+              <TextField
+                id="registerConfirmPassword"
+                label="Confirm password"
+                variant="standard"
+                type="password"
+                sx={{
+                  width: "100%",
+                  mb: 3,
+                }}
+                name={form.cPassword.type}
+                value={form.cPassword.value}
+                onChange={handleForm}
+                required
+                error={submitError ? form.cPassword.error : false}
+                helperText={submitError ? form.cPassword.helperText : false}
+              />
+            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              endIcon={<SendIcon />}
+              sx={{
+                p: 2,
+                fontWeight: "bold",
+                width: "100%",
+              }}
+            >
+              Register
+            </Button>
+          </form>
+          <Divider
+            sx={{
+              my: 3,
+              width: "45%",
+              mx: "auto",
+            }}
           />
-        </p>
-      </Box>
-    </Container>
+          <p className="mt-3">
+            Already an account?
+            <LinkTo
+              customClass="has-text-weight-semibold ml-2"
+              text="Login"
+              link="/login"
+            />
+          </p>
+        </Box>
+      </Container>
+    </>
   );
 };
 
