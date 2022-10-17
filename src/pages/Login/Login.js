@@ -7,7 +7,11 @@ import LockIcon from "@mui/icons-material/Lock";
 import SendIcon from "@mui/icons-material/Send";
 import LinkTo from "../../components/LinkTo/LinkTo";
 import GoogleIcon from "@mui/icons-material/Google";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { formValid } from "../../shared/formValid";
 import { useNavigate } from "react-router-dom";
@@ -35,21 +39,35 @@ const Login = () => {
       error: false,
       type: "password",
       validPattern: "password",
-      helperText: "Minimum eight characters, at least one letter and one number.",
+      helperText:
+        "Minimum eight characters, at least one letter and one number.",
     },
   });
 
   const handleForm = (e) => {
-    const { name: type, value } = e.target;    
+    const { name: type, value } = e.target;
 
     setForm((form) => ({
       ...form,
       [type]: {
         ...form[type],
         value: value,
-        error: formValid(form[type].validPattern, value)
+        error: formValid(form[type].validPattern, value),
       },
     }));
+  };
+
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Login Successfully");
+        navigation("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   const handleLogin = (e) => {
@@ -60,9 +78,9 @@ const Login = () => {
     const { email, password } = form;
     const { value: emailValue, error: emailError } = email;
     const { value: passwordValue, error: passwordError } = password;
-    
-    if(emailError || passwordError) {   
-      setIsLoading(false)   
+
+    if (emailError || passwordError) {
+      setIsLoading(false);
       toast.success("Enter valid data");
       return setSubmitError(true);
     }
@@ -74,7 +92,7 @@ const Login = () => {
         setIsLoading(false);
         navigation("/");
       })
-      .catch((error) => {        
+      .catch((error) => {
         toast.error(error.message);
         setIsLoading(false);
       });
@@ -84,7 +102,7 @@ const Login = () => {
     <>
       {renderLoader}
       <Container element="section" customClass="px-3 py-5">
-      <ToastContainer />
+        <ToastContainer />
         <Box
           sx={{
             mx: "auto",
@@ -146,13 +164,17 @@ const Login = () => {
                 sx={{
                   width: "100%",
                   my: 3,
-                }}                
+                }}
                 name={form.password.type}
                 value={form.password.value}
                 onChange={handleForm}
                 required
                 error={submitError ? form.password.error : false}
-                helperText={submitError && form.password.error ? form.password.helperText : false}
+                helperText={
+                  submitError && form.password.error
+                    ? form.password.helperText
+                    : false
+                }
               />
             </Box>
             <Button
@@ -198,6 +220,7 @@ const Login = () => {
                 bgcolor: "warning.main",
               },
             }}
+            onClick={signInWithGoogle}
           >
             Login with Google
           </Button>
