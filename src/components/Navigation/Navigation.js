@@ -8,7 +8,11 @@ import { useDispatch } from "react-redux";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./Navigation.scss";
-import { SET_ACTIVE_USER, REMOVE_ACTIVE_USER } from "../../redux/slice/authSlice";
+import {
+  SET_ACTIVE_USER,
+  REMOVE_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
+import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
 
 const Navigation = () => {
   const [userName, setUserName] = useState("");
@@ -41,7 +45,7 @@ const Navigation = () => {
         // console.log(user.email)
 
         if (user.displayName == null) {
-          const u1 = user.email.substring(0, user.email.indexOf('@'));
+          const u1 = user.email.substring(0, user.email.indexOf("@"));
           const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
           setUserName(uName);
         } else {
@@ -57,7 +61,7 @@ const Navigation = () => {
         );
       } else {
         setUserName("");
-        dispatch(REMOVE_ACTIVE_USER())
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
   }, [dispatch, userName]);
@@ -76,10 +80,12 @@ const Navigation = () => {
           <NavLink to="/products" className="navbar-item">
             Products
           </NavLink>
-          <div className="navbar-item">{userName}</div>
-          <div type="button" className="navbar-item" onClick={logout}>
-            Sign out
-          </div>
+          <ShowOnLogin>
+            <div className="navbar-item">{userName}</div>
+            <div type="button" className="navbar-item" onClick={logout}>
+              Sign out
+            </div>
+          </ShowOnLogin>
 
           {/* <div className="navbar-item has-dropdown is-hoverable">
             <Link className="navbar-link">More</Link>

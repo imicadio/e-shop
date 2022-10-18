@@ -3,6 +3,7 @@ import React from "react";
 import Container from "../../layout/Container/Container";
 import LinkTo from "../LinkTo/LinkTo";
 import Search from "../Search/Search";
+import ShowOnLogout from "../../components/ShowOnLogout/ShowOnLogout";
 
 import "./HeaderContent.scss";
 
@@ -35,18 +36,30 @@ export default function headerContent() {
         <Search customClass="column field has-addons mb-0 header__search-wrapper is-align-items-center" />
 
         {/* BTN LOGIN */}
-        <div className="column is-3 is-hidden-touch is-flex is-align-items-center is-justify-content-flex-end">
-          <div className="mr-2">
-            <p className="is-size-7 has-text-weight-medium">
-              Don't have an account?
-            </p>
-            <p className="has-text-weight-semibold">
-              Join us <LinkTo customClass="has-text-weight-bold" link="/register" text="Register" />!
-            </p>
-          </div>
+        <ShowOnLogout>
+          <div className="column is-3 is-hidden-touch is-flex is-align-items-center is-justify-content-flex-end">
+            <div className="mr-2">
+              <p className="is-size-7 has-text-weight-medium">
+                Don't have an account?
+              </p>
+              <p className="has-text-weight-semibold">
+                Join us{" "}
+                <LinkTo
+                  customClass="has-text-weight-bold"
+                  link="/register"
+                  text="Register"
+                />
+                !
+              </p>
+            </div>
 
-          <LinkTo customClass="button is-primary" link="/login" text="Login" />
-        </div>
+            <LinkTo
+              customClass="button is-primary"
+              link="/login"
+              text="Login"
+            />
+          </div>
+        </ShowOnLogout>
 
         {/* RESPONSIVE BUTTON */}
         <div className="header__btn-actions-wrapper is-hidden-desktop column is-flex is-justify-content-end p-0">
