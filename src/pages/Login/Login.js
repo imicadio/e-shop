@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Container from "../../layout/Container/Container";
 
 import { TextField, Button, Box, Typography, Divider } from "@mui/material";
@@ -6,7 +6,12 @@ import { TextField, Button, Box, Typography, Divider } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import SendIcon from "@mui/icons-material/Send";
 import LinkTo from "../../components/LinkTo/LinkTo";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import GoogleIcon from "@mui/icons-material/Google";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { formValid } from "../../shared/formValid";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +19,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/Loader/Loader";
 
-const Register = () => {
+const Login = () => {
   const [submitError, setSubmitError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const navigation = useNavigate();
 
   const renderLoader = isLoading && <Loader />;
@@ -35,14 +39,8 @@ const Register = () => {
       error: false,
       type: "password",
       validPattern: "password",
-      helperText: "",
-    },
-    cPassword: {
-      value: "",
-      error: false,
-      type: "cPassword",
-      validPattern: "password",
-      helperText: "",
+      helperText:
+        "Minimum eight characters, at least one letter and one number.",
     },
   });
 
@@ -54,90 +52,40 @@ const Register = () => {
       [type]: {
         ...form[type],
         value: value,
+        error: formValid(form[type].validPattern, value),
       },
     }));
   };
 
-  useEffect(() => {
-    const findPasswords = Object.keys(form).filter(
-      (element) => form[element].validPattern === "password"
-    );
+  const provider = new GoogleAuthProvider();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Login Successfully");
+        navigation("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
-    const password1 = findPasswords[0];
-    const password2 = findPasswords[1];
-
-    for (let type in form) {
-      const isConfirmValid = findPasswords.find((element) => element === type);
-
-      if (isConfirmValid) {
-        const correctPassword = formValid(
-          form[type].validPattern,
-          form[type].value
-        );
-        const samePassword = form[password1].value === form[password2].value;
-
-        if (correctPassword) {
-          setForm((form) => ({
-            ...form,
-            [type]: {
-              ...form[type],
-              error: formValid(form[type].validPattern, form[type].value),
-              helperText:
-                "Minimum eight characters, at least one letter and one number.",
-            },
-          }));
-        } else if (samePassword) {
-          setForm((form) => ({
-            ...form,
-            [type]: {
-              ...form[type],
-              error: false,
-              helperText: "",
-            },
-          }));
-        } else {
-          setForm((form) => ({
-            ...form,
-            [password1]: {
-              ...form[password1],
-              error: true,
-              helperText: "",
-            },
-            [password2]: {
-              ...form[password2],
-              error: true,
-              helperText: "Password must be the same",
-            },
-          }));
-        }
-      } else {
-        setForm((form) => ({
-          ...form,
-          [type]: {
-            ...form[type],
-            error: formValid(form[type].validPattern, form[type].value),
-          },
-        }));
-      }
-    }
-  }, [form.email.value, form.password.value, form.cPassword.value]);
-
-  const registerUser = (e) => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     e.preventDefault();
     setIsLoading(true);
 
     const { email, password } = form;
-    const { value: emailValue, error: emailvalid } = email;
-    const { value: passwordValue, error: passwordvalid } = password;
+    const { value: emailValue, error: emailError } = email;
+    const { value: passwordValue, error: passwordError } = password;
 
-    console.log(emailvalid || passwordvalid);
-    if (emailvalid || passwordvalid) {
+    if (emailError || passwordError) {
       setIsLoading(false);
-      toast.error("Please complete fix form");
+      toast.success("Enter valid data");
       return setSubmitError(true);
     }
 
-    createUserWithEmailAndPassword(auth, emailValue, passwordValue)
+    signInWithEmailAndPassword(auth, emailValue, passwordValue)
       .then((userCredential) => {
         const user = userCredential.user;
         toast.success("Succes Register...");
@@ -145,8 +93,8 @@ const Register = () => {
         navigation("/");
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error.message);
+        setIsLoading(false);
       });
   };
 
@@ -184,12 +132,12 @@ const Register = () => {
             sx={{ mb: 3 }}
             align={"center"}
           >
-            Register
+            Login
           </Typography>
-          <form onSubmit={registerUser}>
+          <form onSubmit={handleLogin}>
             <Box>
               <TextField
-                id="registerName"
+                id="loginName"
                 label="Email"
                 variant="standard"
                 sx={{
@@ -209,7 +157,7 @@ const Register = () => {
             </Box>
             <Box>
               <TextField
-                id="registerPassword"
+                id="loginPassword"
                 label="Password"
                 variant="standard"
                 type="password"
@@ -222,25 +170,11 @@ const Register = () => {
                 onChange={handleForm}
                 required
                 error={submitError ? form.password.error : false}
-                helperText={submitError ? form.password.helperText : false}
-              />
-            </Box>
-            <Box>
-              <TextField
-                id="registerConfirmPassword"
-                label="Confirm password"
-                variant="standard"
-                type="password"
-                sx={{
-                  width: "100%",
-                  mb: 3,
-                }}
-                name={form.cPassword.type}
-                value={form.cPassword.value}
-                onChange={handleForm}
-                required
-                error={submitError ? form.cPassword.error : false}
-                helperText={submitError ? form.cPassword.helperText : false}
+                helperText={
+                  submitError && form.password.error
+                    ? form.password.helperText
+                    : false
+                }
               />
             </Box>
             <Button
@@ -253,8 +187,17 @@ const Register = () => {
                 width: "100%",
               }}
             >
-              Register
+              Login
             </Button>
+            <p className="mt-3">
+              Forgot
+              <LinkTo
+                customClass="has-text-weight-semibold ml-2"
+                text="Password"
+                link="/reset"
+              />
+              ?
+            </p>
           </form>
           <Divider
             sx={{
@@ -263,12 +206,31 @@ const Register = () => {
               mx: "auto",
             }}
           />
+          <Button
+            variant="outlined"
+            startIcon={<GoogleIcon />}
+            sx={{
+              width: "100%",
+              p: 2,
+              color: "warning.main",
+              border: 2,
+              "&:hover": {
+                border: 2,
+                color: "primary.contrastText",
+                bgcolor: "warning.main",
+              },
+            }}
+            onClick={signInWithGoogle}
+          >
+            Login with Google
+          </Button>
+
           <p className="mt-3">
-            Already an account?
+            Dont have an account?
             <LinkTo
               customClass="has-text-weight-semibold ml-2"
-              text="Login"
-              link="/login"
+              text="Register"
+              link="/register"
             />
           </p>
         </Box>
@@ -277,4 +239,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
