@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import LinkTo from "../../LinkTo/LinkTo";
+import AddToCart from '../../Add-to-cart/Add-to-cart';
 
 import "./CardNormal.scss";
 
@@ -14,6 +15,8 @@ const CardNormal = ({
   thumbnail,
   images,
 }) => {
+  const [amount, setAmount] = useState(1);
+
   return (
     <div className="columns border-bottom card-normal__wrapper">
       <LinkTo customClass="column is-2 box-square">
@@ -39,28 +42,7 @@ const CardNormal = ({
           {stock} <i className="fa-solid fa-arrow-up-short-wide"></i>
         </p>
       </div>
-      <div class="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center pr-3">
-        <div className="card-normal__input-wrapper is-flex">
-          <input
-            className="input is-hovered border-wrapper"
-            type="text"
-            placeholder="Hovered input"
-            value="1"
-          />
-          <div className="buttons-counter__wrapper is-flex is-justify-content-space-between">
-            <button type="button" className="card-normal__button btn-counter">
-              <i class="fa-solid fa-plus"></i>
-            </button>
-            <button type="button" className="card-normal__button btn-counter">
-              <i class="fa-solid fa-minus"></i>
-            </button>
-          </div>
-          <p className="title is-size-7 mx-1 my-auto">szt.</p>
-          <button type="button" className="button is-primary px-3">
-            <i class="fa-solid fa-cart-arrow-down"></i>
-          </button>
-        </div>
-      </div>
+      <AddToCart customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center pr-3" type="cart-minimal" />
     </div>
   );
 };
