@@ -1,0 +1,32 @@
+@import '../../../style/index.scss';
+$height-counter: 19.5px;
+
+.card-normal__wrapper {
+    &:nth-child(even) {
+        background-color: $c-white-dark;
+    }
+}
+
+.card-normal__input-wrapper {
+    input {
+        width: 60px;
+    }
+}
+
+.card-normal__button {
+    width: $height-counter;
+    height: $height-counter;
+}
+
+.buttons-counter__wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-counter {
+    display: block;
+    font-size: 8px;
+    padding: 0;
+    border: $border-1;
+    cursor: pointer;
+}
