@@ -32,7 +32,7 @@ export const Products = () => {
 
   const returnProduct = (product, id) => {
     return isMobile ? (
-      <CardResponsive key={`product-${id}`} />
+      <CardResponsive {...product} key={`product-${id}`} />
     ) : (
       returnProductsView(product, id)
     );

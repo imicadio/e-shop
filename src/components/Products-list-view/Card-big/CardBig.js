@@ -46,14 +46,14 @@ const CardBig = ({
       <div className="column is-4 big-card__info-wrapper bg--gray-light border-left">
 
         <div className="block columns">
-          <div class="column is-half">
+          <div className="column is-half">
             <p className="title is-3">
               {price}
               <span className="title is-5">$</span>
             </p>
             <p className="subtitle is-7">netto</p>
           </div>
-          <div class="column is-half is-flex is-flex-direction-column is-align-items-end is-justify-content-end">
+          <div className="column is-half is-flex is-flex-direction-column is-align-items-end is-justify-content-end">
             <p className="title is-5">
               {price}
               <span className="title is-7">$</span>
@@ -64,7 +64,7 @@ const CardBig = ({
 
         <div className="block">
           <div className="block columns">
-            <div class="column is-4">
+            <div className="column is-4">
               <p className="title is-6">
                 {brutto}
                 <span className="title is-7">$</span>
@@ -79,7 +79,7 @@ const CardBig = ({
               <p className="subtitle is-7">quantity</p>
             </div>
 
-            <div class="column is-4 is-flex is-flex-direction-column is-align-items-end is-justify-content-end">
+            <div className="column is-4 is-flex is-flex-direction-column is-align-items-end is-justify-content-end">
               <p className="title is-6">
                 {brutto}
                 <span className="title is-7">$</span>
