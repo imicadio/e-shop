@@ -1,0 +1,8 @@
+@import "bulma/sass/utilities/mixins";
+
+.products__content-wrapper {
+  @include until-widescreen {
+    flex: none !important;
+    width: 100% !important;
+  }
+}

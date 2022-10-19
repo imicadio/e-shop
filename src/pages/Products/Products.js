@@ -9,6 +9,8 @@ import {
   CardResponsive,
 } from "../../components/Products-list-view";
 
+import './Products.scss'
+
 export const Products = () => {
   const [bigList, setBigList] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +27,7 @@ export const Products = () => {
   
 
   const returnProductsView = (product, id) => {
-    return bigList ? <CardBig key={`product-${id}`} /> : <CardNormal {...product} key={`product-${id}`} />;
+    return bigList ? <CardBig {...product} key={`product-${id}`} /> : <CardNormal {...product} key={`product-${id}`} />;
   };
 
   const returnProduct = (product, id) => {
@@ -46,8 +48,8 @@ export const Products = () => {
   return (
     <Container customClass="p-5">
       <div className="main-content columns">
-        <div className="column is-3">Filters</div>
-        <div className="column is-9">
+        <div className="column is-3 is-hidden-touch is-hidden-desktop-only">Filters</div>
+        <div className="column is-9 products__content-wrapper">
           <FilterList onClickGrid={handleGrid} />
           <div className="products-list-wrapper">{renderProductsList}</div>
         </div>
