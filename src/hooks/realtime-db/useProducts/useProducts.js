@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useSlider = (count) => {
+export const useProducts = (count) => {
   const [isLoading, setIsLoading] = useState(false);
   const [slides, setSlides] = useState([]);
   const [loadingError, setLoadingError] = useState(false);
@@ -21,7 +21,7 @@ export const useSlider = (count) => {
         }
         let data = await response.json();
 
-        data = data.slice(0, count);
+        if(count) data = data.slice(0, count);        
         setSlides(data)
         setIsLoading(true);        
       }

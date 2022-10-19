@@ -1,12 +1,12 @@
 import React from "react";
 import Slider from "../../containers/Slider/Slider";
 import Container from "../../layout/Container/Container";
-import { useSlider } from "../../hooks/realtime-db/useSlider/useSlider";
+import { useProducts } from "../../hooks/realtime-db/useProducts/useProducts";
 
 import "./Home.scss";
 
 const Home = () => {
-  const [isLoading, loadingError, slides] = useSlider(3);
+  const [isLoading, loadingError, slides] = useProducts(3);
 
   if (!isLoading) {
     return (

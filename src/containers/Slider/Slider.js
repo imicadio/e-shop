@@ -48,8 +48,8 @@ const Slider = ({
   const renderSlides = slides.map((slide, index) => (
     <SwiperSlide key={index}>
       <img
-        src={slide.productImage}
-        alt={slide.productName}
+        src={slide.thumbnail}
+        alt={slide.id}
         className="full-width"
       />
     </SwiperSlide>
