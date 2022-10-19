@@ -13,9 +13,9 @@ const CardNormal = ({
   rating,
   category,
   thumbnail,
-  images,
+  images,    
+  amount
 }) => {
-  const [amount, setAmount] = useState(1);
 
   return (
     <div className="columns border-bottom card-normal__wrapper">
@@ -42,7 +42,7 @@ const CardNormal = ({
           {stock} <i className="fa-solid fa-arrow-up-short-wide"></i>
         </p>
       </div>
-      <AddToCart customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center pr-3" type="cart-minimal" />
+      <AddToCart amount={amount} customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center pr-3" type="cart-minimal" />
     </div>
   );
 };

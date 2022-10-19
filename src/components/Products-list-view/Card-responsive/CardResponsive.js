@@ -25,8 +25,6 @@ const CardResponsive = ({
           <h2 className="title is-5 is-uppercase has-text-weight-semibold">
             {title}
           </h2>
-        </LinkTo>
-        <LinkTo>
           <p className="subtitle is-6">{description}</p>
         </LinkTo>
       </div>

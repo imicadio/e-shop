@@ -1,13 +1,13 @@
 import React from "react";
 
-const CartMinimal = () => {
+const CartMinimal = ({ amount }) => {
   return (
     <div className="card-normal__input-wrapper is-flex">
       <input
         className="input is-hovered border-wrapper"
         type="text"
         placeholder="Hovered input"
-        // value={amount}
+        value={amount}
         // onChange={() => setAmount(amount + 1)}
       />
       <div className="buttons-counter__wrapper is-flex is-justify-content-space-between">
