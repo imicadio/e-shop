@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import LinkTo from "../../LinkTo/LinkTo";
 import AddToCart from "../../Add-to-cart/Add-to-cart";
 import { Rating } from "@mui/material";
 import { useBrutto } from "../../../hooks/useBrutto";
+import { AmountContext } from "../Products-list/Products-list";
 
 import './CardBig.scss';
 
@@ -17,7 +18,12 @@ const CardBig = ({
   thumbnail,
   images,
 }) => {
+  const { amount } = useContext(AmountContext);
+
   const brutto = useBrutto(price);
+
+  const amountBrutto = (amount * brutto).toFixed(2);
+  const amountNetto = (amount * price).toFixed(2);
 
   return (
     <div className="columns border-wrapper card-big__wrapper mt-1">
@@ -45,14 +51,14 @@ const CardBig = ({
       <div className="column is-4 big-card__info-wrapper bg--gray-light border-left">
 
         <div className="block columns">
-          <div className="column is-half">
+          <div className="column is-8">
             <p className="title is-3">
-              {price}
+              {amountNetto}
               <span className="title is-5">$</span>
             </p>
             <p className="subtitle is-7">netto</p>
           </div>
-          <div className="column is-half is-flex is-flex-direction-column is-align-items-end is-justify-content-end">
+          <div className="column is-4 is-flex is-flex-direction-column is-align-items-end is-justify-content-end">
             <p className="title is-5">
               {price}
               <span className="title is-7">$</span>
@@ -65,7 +71,7 @@ const CardBig = ({
           <div className="block columns">
             <div className="column is-4">
               <p className="title is-6">
-                {brutto}
+                {amountBrutto}
                 <span className="title is-7">$</span>
               </p>
               <p className="subtitle is-7">brutto</p>

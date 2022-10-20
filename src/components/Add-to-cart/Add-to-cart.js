@@ -2,12 +2,12 @@ import React from 'react'
 import CartMinimal from './Cart-minimal/Cart-minimal';
 import CartNormal from './Cart-normal/Cart-normal';
 
-const AddToCart = ({ type, customClass, amount }) => {
+const AddToCart = ({ type, customClass }) => {
 
   const renderComponent = (type) => {
     switch(type) {
       case 'cart-minimal':
-        return <CartMinimal amount={amount} />;
+        return <CartMinimal />;
       case 'cart-normal':
         return <CartNormal />;
       default: 

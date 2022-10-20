@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import LinkTo from "../../LinkTo/LinkTo";
 import AddToCart from "../../Add-to-cart/Add-to-cart";
 import { Rating } from "@mui/material";
 import { useBrutto } from "../../../hooks/useBrutto";
+import { AmountContext } from "../Products-list/Products-list";
 
 import "./CardResponsive.scss";
-
 
 const CardResponsive = ({
   title,
@@ -18,7 +18,12 @@ const CardResponsive = ({
   thumbnail,
   images,
 }) => {
+  const { amount } = useContext(AmountContext);
+
   const brutto = useBrutto(price);
+
+  const amountBrutto = (amount * brutto).toFixed(2);
+  const amountNetto = (amount * price).toFixed(2);
 
   return (
     <div className="columns p-3 card-responsive__wrapper mt-3">
@@ -49,7 +54,7 @@ const CardResponsive = ({
 
           <div className="block">
             <p className="title is-3">
-              {price}
+              {amountNetto}
               <span className="title is-5">$</span>
             </p>
             <p className="subtitle is-7">netto</p>
@@ -57,7 +62,7 @@ const CardResponsive = ({
 
           <div className="block">
             <p className="title is-6">
-              {brutto}
+              {amountBrutto}
               <span className="title is-7">$</span>
             </p>
             <p className="subtitle is-7">brutto</p>

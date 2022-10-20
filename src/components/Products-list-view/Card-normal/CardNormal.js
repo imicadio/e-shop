@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import LinkTo from "../../LinkTo/LinkTo";
 import AddToCart from '../../Add-to-cart/Add-to-cart';
+import { AmountContext } from "../Products-list/Products-list";
 
 import "./CardNormal.scss";
 
@@ -15,6 +16,9 @@ const CardNormal = ({
   thumbnail,
   images,   
 }) => {
+  const { amount } = useContext(AmountContext);
+
+  const amountPrice = price * amount;
 
   return (
     <div className="columns border-bottom card-normal__wrapper">
@@ -32,8 +36,8 @@ const CardNormal = ({
         </LinkTo>
       </div>
       <div className="column is-2 is-flex is-flex-direction-column is-justify-content-center">
-        <h3 className="title is-5 mb-0 has-text-centered">{price}</h3>
-        <p className="has-text-weight-light has-text-centered">{price}</p>
+        <h3 className="title is-5 mb-0 has-text-centered">{amountPrice}<span className="title is-6">$</span></h3>
+        <p className="has-text-weight-light has-text-centered">{price}<span className="title is-7 has-text-weight-light">$ szt.</span></p>
         <p className="has-text-weight-light has-text-centered">netto</p>
       </div>
       <div className="column is-1 is-flex is-flex-direction-column is-justify-content-center">
