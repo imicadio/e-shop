@@ -13,8 +13,7 @@ const CardNormal = ({
   rating,
   category,
   thumbnail,
-  images,    
-  amount
+  images,   
 }) => {
 
   return (
@@ -42,7 +41,7 @@ const CardNormal = ({
           {stock} <i className="fa-solid fa-arrow-up-short-wide"></i>
         </p>
       </div>
-      <AddToCart amount={amount} customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center pr-3" type="cart-minimal" />
+      <AddToCart customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center pr-3" type="cart-minimal" />
     </div>
   );
 };

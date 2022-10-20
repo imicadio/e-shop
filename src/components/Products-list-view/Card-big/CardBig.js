@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import LinkTo from "../../LinkTo/LinkTo";
 import AddToCart from "../../Add-to-cart/Add-to-cart";
 import { Rating } from "@mui/material";
+import { useBrutto } from "../../../hooks/useBrutto";
 
 import './CardBig.scss';
 
@@ -16,9 +17,7 @@ const CardBig = ({
   thumbnail,
   images,
 }) => {
-  const [amount, setAmount] = useState(1);
-
-  const brutto = price * 0.23 + price;
+  const brutto = useBrutto(price);
 
   return (
     <div className="columns border-wrapper card-big__wrapper mt-1">

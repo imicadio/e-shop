@@ -2,8 +2,10 @@ import React from "react";
 import LinkTo from "../../LinkTo/LinkTo";
 import AddToCart from "../../Add-to-cart/Add-to-cart";
 import { Rating } from "@mui/material";
+import { useBrutto } from "../../../hooks/useBrutto";
 
 import "./CardResponsive.scss";
+
 
 const CardResponsive = ({
   title,
@@ -16,7 +18,7 @@ const CardResponsive = ({
   thumbnail,
   images,
 }) => {
-  const brutto = price * 0.23 + price;
+  const brutto = useBrutto(price);
 
   return (
     <div className="columns p-3 card-responsive__wrapper mt-3">

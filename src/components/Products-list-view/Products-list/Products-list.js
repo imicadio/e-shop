@@ -4,20 +4,19 @@ import { CardBig, CardNormal, CardResponsive } from "../index";
 export const AmountContext = createContext(null);
 
 const ProductsList = ({ product, isMobile, bigList }) => {
-  const [amount, setAmount] = useState(1); 
-  
+  const [amount, setAmount] = useState(1);   
   const stock = product.stock;
 
   const returnProductsView = (product) => {
     return bigList ? (
-      <CardBig {...product} amount={amount} />
+      <CardBig {...product}  />
     ) : (
-      <CardNormal {...product} amount={amount} />
+      <CardNormal {...product}  />
     );
   };
 
   const returnProduct = isMobile ? (
-    <CardResponsive {...product} amount={amount} />
+    <CardResponsive {...product} />
   ) : (
     returnProductsView(product)
   );
