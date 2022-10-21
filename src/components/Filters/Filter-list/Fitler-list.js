@@ -1,6 +1,6 @@
 import React from "react";
 
-const FitlerList = ({ onClickGrid }) => {
+const FitlerList = ({ onClickGrid, hadleSearch }) => {
   return (
     <div className="columns my-1 box product-list__filter-container">
       <div className="column is-1 p-0">
@@ -17,7 +17,7 @@ const FitlerList = ({ onClickGrid }) => {
       </div>
       <div className="column py-0 field is-4">
         <div className="control is-small is-loading">
-          <input className="input is-small" type="text" placeholder="Search" />
+          <input className="input is-small" type="text" placeholder="Search" onChange={(e) => hadleSearch(e.target.value)} />
         </div>
       </div>
 

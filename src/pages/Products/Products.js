@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Container from "../../layout/Container/Container";
 import FilterList from "../../components/Filters/Filter-list/Fitler-list";
-import { useProducts } from "../../hooks/realtime-db/useProducts/useProducts";
 import { useScreen } from "../../hooks/useScreen";
-import { ProductsList } from "../../components/Products-list-view";
 import { fetchProducts } from '../../redux/slice/listProductSlice';
+import ProductsListing from "../../containers/ProductsListing/ProductsListing";
+
+import { FILTER_BY_SEARCH, selectFilteredProducts } from "../../redux/slice/filterSlice";
 
 import "./Products.scss";
 
@@ -13,29 +14,22 @@ import "./Products.scss";
 export const Products = () => {
   const [bigList, setBigList] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const returnProducts = useSelector(fetchProducts);
-  const { isMobile } = useScreen();
+  const [itemsPerPage, setItemsPerPage] = useState(10);  
+  const { isMobile } = useScreen();  
+  const [search, setSearch] = useState('');
+  const filteredProducts = useSelector(selectFilteredProducts);
 
-  const indexOfLastProduct = currentPage * itemsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-  const arrayProducts = returnProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const products = useSelector(fetchProducts);
 
-  const handleGrid = (value) => setBigList(value);
+  const dispatch = useDispatch(); 
 
-  const renderProductsList =
-    returnProducts.length > 0 ? (
-      arrayProducts.map((product, id) => (      
-          <ProductsList
-            product={product}
-            isMobile={isMobile}
-            bigList={bigList}     
-            key={`product-${id}`}       
-          />
-      ))
-    ) : (
-      <h2>No results products</h2>
-    );
+  const handleGrid = (value) => setBigList(value);  
+
+  const hadleSearch = (value) => setSearch(value)
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({products, search}));
+  }, [dispatch, products, search])
 
   return (
     <Container customClass="p-5">
@@ -44,8 +38,8 @@ export const Products = () => {
           Filters
         </div>
         <div className="column is-9 products__content-wrapper">
-          <FilterList onClickGrid={handleGrid} />
-          <div className="products-list-wrapper">{renderProductsList}</div>
+          <FilterList onClickGrid={handleGrid} hadleSearch={hadleSearch} />
+          <ProductsListing products={filteredProducts} isMobile={isMobile} bigList={bigList} currentPage={currentPage} itemsPerPage={itemsPerPage} />
 
           {/* <ProductsList
             customClass="products-list-wrapper"
