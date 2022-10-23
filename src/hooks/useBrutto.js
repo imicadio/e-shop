@@ -1,3 +1,1 @@
-export const useBrutto = (netto) => {
-    return (netto * 0.23) + netto;
-}
+export const useBrutto = (netto) => (netto * 0.23) + netto;

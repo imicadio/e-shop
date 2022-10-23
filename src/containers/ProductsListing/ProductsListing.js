@@ -1,7 +1,7 @@
 import React from "react";
 import { ProductsList } from "../../components/Products-list-view";
 
-const ProductsListing = ({ products, isMobile, bigList, currentPage, itemsPerPage }) => {
+const ProductsListing = ({ products, isMobile, bigList, currentPage, itemsPerPage, handleTotalPages }) => {
 
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;

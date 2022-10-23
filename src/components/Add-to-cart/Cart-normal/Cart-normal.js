@@ -1,20 +1,12 @@
 import React, { useContext } from "react";
+import { inputBetweenNumber } from "../../../hooks/numbers";
 import { AmountContext } from "../../Products-list-view/Products-list/Products-list";
 
 const CartNormal = () => {
   const { amount, setAmount, stock } = useContext(AmountContext);
 
   const handleAmount = (e) => {
-    const inputValue = parseInt(e.target.value.toString().replace(/[^0-9]/g, ""));
-
-    const min = parseInt(e.target.min);
-    const max = parseInt(e.target.max);
-
-    if (inputValue > min && inputValue < max)
-      return setAmount(inputValue);
-    else if (inputValue <= 0) return setAmount(1);
-    else if (inputValue > stock) return setAmount(stock);
-    else return setAmount('');
+    setAmount(inputBetweenNumber(e.target.value, stock))
   };
 
   return (

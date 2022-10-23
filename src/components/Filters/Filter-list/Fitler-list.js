@@ -1,10 +1,36 @@
 import React from "react";
 
-const FitlerList = ({ onClickGrid, hadleSearch }) => {
+import {
+  IconButton,
+  MenuItem,
+  FormControl,
+  Select,
+  TextField,
+} from "@mui/material";
+
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+import "./Filter-list.scss";
+import { inputBetweenNumber } from "../../../hooks/numbers";
+
+const FitlerList = ({
+  onClickGrid,
+  hadleSearch,
+  itemsPerPage,
+  handleItemsPerPage,
+  currentPage,
+  handleCurrentPage,
+  totalPages
+}) => {
   return (
-    <div className="columns my-1 box product-list__filter-container">
-      <div className="column is-1 p-0">
-        <button type="button" className="btn" onClick={() => onClickGrid(true)}>
+    <div className="columns box product-list__filter-container">
+      <div className="block mb-0 is-flex p-0 is-align-items-center">
+        <button
+          type="button"
+          className="btn mr-2"
+          onClick={() => onClickGrid(true)}
+        >
           <i className="fa-solid fa-border-all"></i>
         </button>
         <button
@@ -15,47 +41,50 @@ const FitlerList = ({ onClickGrid, hadleSearch }) => {
           <i className="fa-solid fa-list"></i>
         </button>
       </div>
-      <div className="column py-0 field is-4">
-        <div className="control is-small is-loading">
-          <input className="input is-small" type="text" placeholder="Search" onChange={(e) => hadleSearch(e.target.value)} />
+
+      <div className="column is-flex is-justify-content-center is-align-items-center">
+        <p>Items </p>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 50 }}>
+          <Select
+            value={itemsPerPage}
+            onChange={(e) => handleItemsPerPage(e.target.value)}
+            label="Items per page"
+          >
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={15}>15</MenuItem>
+            <MenuItem value={20}>25</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
+          </Select>
+        </FormControl>
+        <p>of {totalPages} pages</p>
+      </div>
+
+      <div className="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center">
+        <div className="control is-small is-loading full-width">
+          <input
+            className="input is-small"
+            type="text"
+            placeholder="Search"
+            onChange={(e) => hadleSearch(e.target.value)}
+          />
         </div>
       </div>
 
-      {/* <div className="column is-6">
-              <p>Sorted by:</p>
-              <div class="dropdown is-active">
-                <div class="dropdown-trigger">
-                  <button
-                    class="button"
-                    aria-haspopup="true"
-                    aria-controls="dropdown-menu"
-                  >
-                    <span>Dropdown button</span>
-                    <span class="icon is-small">
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div class="dropdown-content">
-                    <a href="#" class="dropdown-item">
-                      Dropdown item
-                    </a>
-                    <a class="dropdown-item">Other dropdown item</a>
-                    <a href="#" class="dropdown-item is-active">
-                      Active dropdown item
-                    </a>
-                    <a href="#" class="dropdown-item">
-                      Other dropdown item
-                    </a>
-                    <hr class="dropdown-divider" />
-                    <a href="#" class="dropdown-item">
-                      With a divider
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div> */}
+      <div className="block is-flex is-align-items-center is-justify-content-end">
+        <IconButton aria-label="delete" size="small" onClick={() => currentPage > 1 && handleCurrentPage(currentPage - 1)}>
+          <ArrowBackIosIcon fontSize="inherit" />
+        </IconButton>
+        <TextField
+          id="standard-basic"
+          className="is-flex is-align-items-center filter-input__search"
+          variant="standard"
+          value={currentPage}
+          onChange={(e) => handleCurrentPage(inputBetweenNumber(e.target.value, totalPages))}
+        />
+        <IconButton aria-label="delete" size="small" onClick={() => currentPage < totalPages && handleCurrentPage(currentPage + 1)}>
+          <ArrowForwardIosIcon fontSize="inherit" />
+        </IconButton>
+      </div>
     </div>
   );
 };
