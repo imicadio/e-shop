@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Checkbox,
@@ -13,23 +13,20 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import "./AccordionFilter.scss";
 
-const AccordionFilter = ({ items, title, handleSelect, name }) => {
+const AccordionFilter = ({ items, title, handleSelect, name, checkboxes }) => {
   const [expanded, setExpanded] = useState(false);
-  const [checkedItems, setCheckedItems] = useState([]);
 
   const handleChange = (panel) => (event, isExpanded) =>
     setExpanded(isExpanded ? panel : false);
 
   const handleCheckbox = (e) => {
     const value = e.target.value;
-    const valueIndex = checkedItems.indexOf(value);
+    const valueIndex = checkboxes.indexOf(value);    
 
     if (valueIndex >= 0) {
-      setCheckedItems(checkedItems.filter((element) => element !== value));
-      return handleSelect(name, checkedItems.filter((element) => element !== value));
+      return handleSelect(name, checkboxes.filter((element) => element !== value));
     } else {
-      setCheckedItems([...checkedItems, value]);
-      return handleSelect(name, [...checkedItems, value]);
+      return handleSelect(name, [...checkboxes, value]);
     }
   };
 
@@ -39,7 +36,7 @@ const AccordionFilter = ({ items, title, handleSelect, name }) => {
         {items.map((item, id) => (
           <FormControlLabel
             key={id}
-            control={<Checkbox value={item} onClick={handleCheckbox} />}
+            control={<Checkbox value={item} checked={checkboxes.includes(item.toUpperCase())} onClick={handleCheckbox} />}
             label={item}
           />
         ))}

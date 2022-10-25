@@ -51,8 +51,6 @@ const filterSlice = createSlice({
     FILTER_BY_CATEGORIES: (state, action) => {
       const { products, filters, price } = action.payload;
 
-      console.log(price)
-
       let tmpProducts = [];
 
       const hasFilter = Object.values(filters).some((x) => x.length > 0);
