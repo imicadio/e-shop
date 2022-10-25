@@ -11,13 +11,13 @@ import { Slider } from "@mui/material";
 
 import AccordionFilter from "../AccordionFilter/AccordionFilter";
 
-import { FILTER_BY_BRANDS } from "../../redux/slice/filterSlice";
+import { FILTER_BY_CATEGORIES } from "../../redux/slice/filterSlice";
 import { fetchProducts } from "../../redux/slice/listProductSlice";
 
 const FilterAside = () => {
   const dispatch = useDispatch();
 
-  const [value, setValue] = useState([0, 10]);
+  const [price, setPrice] = useState([0, 10]);
   const [selectedFilter, setSelectedFilter] = useState({
     brand: [],
     category: [],
@@ -30,15 +30,7 @@ const FilterAside = () => {
   const brands = useSelector(fetchBrands);
   const categories = useSelector(fetchCategories);
 
-  const handleBrands = (value) => {
-    setSelectedFilter({
-      ...selectedFilter,
-      brand: value,
-    });
-  };
-
   const handleSelect = (name, value) => {
-    console.log(name)
     setSelectedFilter({
       ...selectedFilter,
       [name]: value,
@@ -46,18 +38,17 @@ const FilterAside = () => {
   };
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setPrice(newValue);
   };
 
   useEffect(() => {
     if (!isNaN(sliderMin) && sliderMin && !isNaN(sliderMax) && sliderMax)
-      setValue([sliderMin, sliderMax]);
+      setPrice([sliderMin, sliderMax]);
   }, [sliderMax, sliderMin]);
 
   useEffect(() => {
-    console.log(selectedFilter);
-    dispatch(FILTER_BY_BRANDS({ products, filters: selectedFilter }))
-  }, [selectedFilter]);
+    dispatch(FILTER_BY_CATEGORIES({ products, filters: selectedFilter, price }))
+  }, [selectedFilter, price]);
 
   return (
     <div>
@@ -78,7 +69,7 @@ const FilterAside = () => {
       <Slider
         min={isNaN(sliderMin) ? 0 : sliderMin}
         max={isNaN(sliderMax) ? 0 : sliderMax}
-        value={value}
+        value={price}
         onChange={handleChange}
         valueLabelDisplay="auto"
       />

@@ -8,6 +8,7 @@ const initialState = {
   selectedCategories: [],
   minPrice: 0,
   maxPrice: 0,
+  priceMinMax: 0,
 };
 
 const filterSlice = createSlice({
@@ -19,6 +20,7 @@ const filterSlice = createSlice({
       state.categories = action.payload.categories;
       state.minPrice = action.payload.minPrice;
       state.maxPrice = action.payload.maxPrice;
+      state.priceMinMax = [action.payload.minPrice, action.payload.maxPrice];
     },
 
     FILTER_BY_SEARCH(state, action) {
@@ -26,53 +28,66 @@ const filterSlice = createSlice({
 
       let tmpProducts = null;
 
-      console.log('selected brands: ', state.selectedBrands.length);
-
       if (state.selectedBrands.length > 0) {
         tmpProducts = products.filter(
           (product) =>
             product.title.toUpperCase().includes(search.toUpperCase()) &&
-            state.selectedBrands.includes(product.brand.toUpperCase())
+            state.selectedBrands.includes(product.brand.toUpperCase()) &&
+            state.priceMinMax[0] <= product.price &&
+            product.price <= state.priceMinMax[1]
         );
       } else {
-        tmpProducts = products.filter((product) =>
-          product.title.toUpperCase().includes(search.toUpperCase())
+        tmpProducts = products.filter(
+          (product) =>
+            product.title.toUpperCase().includes(search.toUpperCase()) &&
+            state.priceMinMax[0] <= product.price &&
+            product.price <= state.priceMinMax[1]
         );
       }
 
       state.filteredProducts = tmpProducts;
     },
 
-    FILTER_BY_BRANDS: (state, action) => {
-      const { products, filters } = action.payload;
+    FILTER_BY_CATEGORIES: (state, action) => {
+      const { products, filters, price } = action.payload;
+
+      console.log(price)
 
       let tmpProducts = [];
-      
+
       const hasFilter = Object.values(filters).some((x) => x.length > 0);
       if (hasFilter) {
         // get filters keys
-        const keys = Object.keys(filters).filter((x) => filters[x].length);  
+        const keys = Object.keys(filters).filter((x) => filters[x].length);
         tmpProducts = products.filter((product) => {
-          // helper array fot valid element 
+          // helper array fot valid element
           const isArrayValid = [];
           for (const key of keys) {
             const title = product[key].toUpperCase();
-            filters[key].includes(title) ? isArrayValid.push(true) : isArrayValid.push(false);
+            const productPrice = product.price;
+            filters[key].includes(title) &&
+            price[0] <= productPrice &&
+            productPrice <= price[1]
+              ? isArrayValid.push(true)
+              : isArrayValid.push(false);
           }
-          return isArrayValid.every(element => element === true);
+          return isArrayValid.every((element) => element === true);
         });
         state.filteredProducts = tmpProducts;
       } else {
-        state.filteredProducts = products;
+        state.filteredProducts = products.filter(
+          (product) => price[0] <= product.price && product.price <= price[1]
+        );
       }
-      
+
       state.selectedBrands = filters.brand;
       state.selectedCategories = filters.category;
+      state.priceMinMax = price;
     },
   },
 });
 
-export const { FILTER_BY_SEARCH, FILTER_BY_BRANDS, FILTERS_STORE } =
+export const { FILTER_BY_SEARCH, FILTER_BY_CATEGORIES, FILTERS_STORE } =
   filterSlice.actions;
 
 export const selectFilteredProducts = (state) => state.filter.filteredProducts;
