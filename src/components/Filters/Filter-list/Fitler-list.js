@@ -60,7 +60,7 @@ const FitlerList = ({
       </div>
 
       <div className="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center">
-        <div className="control is-small is-loading full-width">
+        <div className="control is-small full-width">
           <input
             className="input is-small"
             type="text"

@@ -6,6 +6,7 @@ import { useScreen } from "../../hooks/useScreen";
 import { fetchProducts } from "../../redux/slice/listProductSlice";
 import ProductsListing from "../../containers/ProductsListing/ProductsListing";
 import FilterAside from "../../components/Filter-aside/Filter-aside";
+import { Stack, Pagination } from "@mui/material";
 
 import {
   FILTER_BY_SEARCH,
@@ -25,15 +26,19 @@ export const Products = () => {
   const [search, setSearch] = useState("");
   const [totalPages, setTotalPages] = useState(null);
   const products = useSelector(fetchProducts);
-  const filteredProducts = useSelector(selectFilteredProducts);  
+  const filteredProducts = useSelector(selectFilteredProducts);
 
   const handleGrid = (value) => setBigList(value);
-  const hadleSearch = (value) => setSearch(value);
+  const hadleSearch = (value) => {
+    setCurrentPage(1);
+    setSearch(value);
+  };
   const handleSetItemsPerPage = (value) => {
     setItemsPerPage(value);
     setTotalPages(floorDown(filteredProducts.length / value));
   };
   const handleCurrentPage = (value) => setCurrentPage(value);
+  const handlePagination = (event, value) => setCurrentPage(value);
 
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({ products, search }));
@@ -47,7 +52,7 @@ export const Products = () => {
     <Container customClass="p-5">
       <div className="main-content columns">
         <div className="column is-3 is-hidden-touch is-hidden-desktop-only">
-          <FilterAside />
+          <FilterAside products={filteredProducts} />
         </div>
         <div className="column is-9 products__content-wrapper">
           <FilterList
@@ -75,6 +80,15 @@ export const Products = () => {
           /> */}
         </div>
       </div>
+
+      <Stack spacing={2} className="mt-5">
+        <Pagination
+          count={10}
+          page={currentPage}
+          onChange={handlePagination}
+          className="is-flex is-justify-content-end"
+        />
+      </Stack>
     </Container>
   );
 };
