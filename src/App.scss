@@ -1,0 +1,15 @@
+@import './style/colors.scss';
+
+::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: $c-gray-e0;        /* color of the tracking area */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: $c-gray-bb;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid $c-gray-e0;  /* creates padding around scroll thumb */
+  }

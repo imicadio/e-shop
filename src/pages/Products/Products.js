@@ -53,10 +53,10 @@ export const Products = () => {
     const html = document.querySelector("html");
 
     if (isActive) {
-      html.classList.remove('no-scroll')
+      html.classList.remove("no-scroll");
       menuFilter.classList.remove(showElement);
     } else {
-      html.classList.add('no-scroll')
+      html.classList.add("no-scroll");
       menuFilter.classList.add(showElement);
     }
   };
@@ -112,14 +112,16 @@ export const Products = () => {
         </div>
       </div>
 
-      <Stack spacing={2} className="mt-5">
-        <Pagination
-          count={10}
-          page={currentPage}
-          onChange={handlePagination}
-          className="is-flex is-justify-content-end"
-        />
-      </Stack>
+      {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
+        <Stack spacing={2} className="mt-5">
+          <Pagination
+            count={floorDown(filteredProducts.length / itemsPerPage)}
+            page={currentPage}
+            onChange={handlePagination}
+            className="is-flex is-justify-content-end"
+          />
+        </Stack>
+      ) : null}
     </Container>
   );
 };
