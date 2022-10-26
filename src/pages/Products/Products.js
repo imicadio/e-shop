@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Container from "../../layout/Container/Container";
 import FilterList from "../../components/Filters/Filter-list/Fitler-list";
@@ -13,10 +13,12 @@ import {
   selectFilteredProducts,
 } from "../../redux/slice/filterSlice";
 
-import "./Products.scss";
 import { floorDown } from "../../hooks/numbers";
 
+import "./Products.scss";
+
 export const Products = () => {
+  const refFilter = useRef();
   const { isMobile } = useScreen();
   const dispatch = useDispatch();
 
@@ -35,24 +37,52 @@ export const Products = () => {
   };
   const handleSetItemsPerPage = (value) => {
     setItemsPerPage(value);
-    setTotalPages(floorDown(filteredProducts.length / value));
+    const tmpTotalPages = floorDown(filteredProducts.length / value);
+    tmpTotalPages > 1
+      ? setTotalPages(floorDown(filteredProducts.length / value))
+      : setTotalPages(1);
   };
   const handleCurrentPage = (value) => setCurrentPage(value);
   const handlePagination = (event, value) => setCurrentPage(value);
+  const handleShowFilter = () => {
+    const showElement = "show-filter";
+
+    const menuFilter = refFilter.current;
+    const isActive = menuFilter.classList.contains(showElement);
+
+    const html = document.querySelector("html");
+
+    if (isActive) {
+      html.classList.remove('no-scroll')
+      menuFilter.classList.remove(showElement);
+    } else {
+      html.classList.add('no-scroll')
+      menuFilter.classList.add(showElement);
+    }
+  };
 
   useEffect(() => {
     dispatch(FILTER_BY_SEARCH({ products, search }));
   }, [dispatch, products, search]);
 
   useEffect(() => {
-    setTotalPages(floorDown(filteredProducts.length / itemsPerPage));
+    const tmpTotalPages = floorDown(filteredProducts.length / itemsPerPage);
+    tmpTotalPages > 1
+      ? setTotalPages(floorDown(filteredProducts.length / itemsPerPage))
+      : setTotalPages(1);
   }, [filteredProducts]);
 
   return (
-    <Container customClass="p-5">
-      <div className="main-content columns">
-        <div className="column is-3 is-hidden-touch is-hidden-desktop-only">
-          <FilterAside products={filteredProducts} />
+    <Container customClass="p-5 products__wrapper position-inherit">
+      <div className="main-content columns position-inherit">
+        <div
+          ref={refFilter}
+          className="column is-3 is-hidden-touch is-hidden-desktop-only position-inherit products__filter-aside"
+        >
+          <FilterAside
+            products={filteredProducts}
+            closeFilter={handleShowFilter}
+          />
         </div>
         <div className="column is-9 products__content-wrapper">
           <FilterList
@@ -63,6 +93,7 @@ export const Products = () => {
             currentPage={currentPage}
             handleCurrentPage={handleCurrentPage}
             totalPages={totalPages}
+            showFilter={handleShowFilter}
           />
           <ProductsListing
             products={filteredProducts}

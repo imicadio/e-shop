@@ -21,11 +21,12 @@ const FitlerList = ({
   handleItemsPerPage,
   currentPage,
   handleCurrentPage,
-  totalPages
+  totalPages,
+  showFilter,
 }) => {
   return (
     <div className="columns box product-list__filter-container">
-      <div className="block mb-0 is-flex p-0 is-align-items-center">
+      <div className="block mb-0 is-flex p-0 is-align-items-center is-hidden-mobile">
         <button
           type="button"
           className="btn mr-2"
@@ -42,7 +43,7 @@ const FitlerList = ({
         </button>
       </div>
 
-      <div className="column is-flex is-justify-content-center is-align-items-center">
+      <div className="column is-flex is-justify-content-center is-align-items-center is-hidden-touch">
         <p>Items </p>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 50 }}>
           <Select
@@ -59,7 +60,7 @@ const FitlerList = ({
         <p>of {totalPages} pages</p>
       </div>
 
-      <div className="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center">
+      <div className="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center is-hidden-touch">
         <div className="control is-small full-width">
           <input
             className="input is-small"
@@ -70,8 +71,12 @@ const FitlerList = ({
         </div>
       </div>
 
-      <div className="block is-flex is-align-items-center is-justify-content-end">
-        <IconButton aria-label="delete" size="small" onClick={() => currentPage > 1 && handleCurrentPage(currentPage - 1)}>
+      <div className="block is-flex is-align-items-center is-justify-content-end is-hidden-touch mb-0">
+        <IconButton
+          aria-label="delete"
+          size="small"
+          onClick={() => currentPage > 1 && handleCurrentPage(currentPage - 1)}
+        >
           <ArrowBackIosIcon fontSize="inherit" />
         </IconButton>
         <TextField
@@ -79,12 +84,29 @@ const FitlerList = ({
           className="is-flex is-align-items-center filter-input__search"
           variant="standard"
           value={currentPage}
-          onChange={(e) => handleCurrentPage(inputBetweenNumber(e.target.value, totalPages))}
+          onChange={(e) =>
+            handleCurrentPage(inputBetweenNumber(e.target.value, totalPages))
+          }
         />
-        <IconButton aria-label="delete" size="small" onClick={() => currentPage < totalPages && handleCurrentPage(currentPage + 1)}>
+        <IconButton
+          aria-label="delete"
+          size="small"
+          onClick={() =>
+            currentPage < totalPages && handleCurrentPage(currentPage + 1)
+          }
+        >
           <ArrowForwardIosIcon fontSize="inherit" />
         </IconButton>
       </div>
+
+      {/* RESPONSIVE BUTTON */}
+      <button
+        type="button"
+        className="header__btn-actions-wrapper is-hidden-desktop column is-flex is-justify-content-end p-0 has-text-weight-semibold button button-primary border-none"
+        onClick={() => showFilter()}
+      >
+        <i className="fa-solid fa-bars-staggered mr-2 title is-5"></i>Filters
+      </button>
     </div>
   );
 };

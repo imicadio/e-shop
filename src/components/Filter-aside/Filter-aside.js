@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchBrands,
@@ -7,19 +7,23 @@ import {
   fetchMinPrice,
 } from "../../redux/slice/filterSlice";
 
-import { Slider } from "@mui/material";
+import { useScreen } from "../../hooks/useScreen";
+
+import { Box, Stack, Slider } from "@mui/material";
 
 import AccordionFilter from "../AccordionFilter/AccordionFilter";
 
 import { FILTER_BY_CATEGORIES } from "../../redux/slice/filterSlice";
 import { fetchProducts } from "../../redux/slice/listProductSlice";
 
+import "./Filter-aside.scss";
+
 export const selectedFilterObject = {
   brand: [],
   category: [],
 };
 
-const FilterAside = () => {
+const FilterAside = ({ closeFilter }) => {
   const dispatch = useDispatch();
 
   const [showResetBtn, setShowResetBtn] = useState(false);
@@ -33,6 +37,8 @@ const FilterAside = () => {
   const brands = useSelector(fetchBrands);
   const categories = useSelector(fetchCategories);
 
+  const { isTouch } = useScreen();
+
   const handleSelect = (name, value) => {
     setSelectedFilter({
       ...selectedFilter,
@@ -42,17 +48,33 @@ const FilterAside = () => {
 
   const handleChange = (event, newValue) => {
     setPrice(newValue);
-  };  
+  };
 
   const handleClear = () => {
-    setSelectedFilter({...selectedFilterObject});
+    setSelectedFilter({ ...selectedFilterObject });
     setPrice([sliderMin, sliderMax]);
-    setShowResetBtn(false)
-  }
+    setShowResetBtn(false);
+  };
 
-  const renderResetBtn = showResetBtn ? (<button type="button" className="button button-primary is-block ml-auto" onClick={handleClear}>
-    <i className="fa-solid fa-xmark mr-2"></i>Clear all
-  </button>) : null;
+  const renderResetBtn = showResetBtn ? (
+    <button
+      type="button"
+      className="button button-primary is-block ml-auto"
+      onClick={handleClear}
+    >
+      <i className="fa-solid fa-xmark mr-2"></i>Clear all
+    </button>
+  ) : null;
+
+  const renderCloseMobileBtn = isTouch ? (
+    <button
+      type="button"
+      className="button button-primary is-block ml-auto border-none title is-5"
+      onClick={() => closeFilter()}
+    >
+      <i className="fa-solid fa-xmark"></i>
+    </button>
+  ) : null;
 
   useEffect(() => {
     if (!isNaN(sliderMin) && sliderMin && !isNaN(sliderMax) && sliderMax)
@@ -60,18 +82,24 @@ const FilterAside = () => {
   }, [sliderMax, sliderMin]);
 
   useEffect(() => {
-    dispatch(FILTER_BY_CATEGORIES({ products, filters: selectedFilter, price }))
+    dispatch(
+      FILTER_BY_CATEGORIES({ products, filters: selectedFilter, price })
+    );
     const hasFilter = Object.values(selectedFilter).some((x) => x.length > 0);
 
-    if(hasFilter) setShowResetBtn(true)
-    else if(price[0] !== sliderMin || price[1] !== sliderMax) setShowResetBtn(true)
-    else setShowResetBtn(false)
-
+    if (hasFilter) setShowResetBtn(true);
+    else if (price[0] !== sliderMin || price[1] !== sliderMax)
+      setShowResetBtn(true);
+    else setShowResetBtn(false);
   }, [selectedFilter, price]);
 
   return (
-    <div>
-      { renderResetBtn }
+    <div className="filter-aside__wrapper">
+      {renderCloseMobileBtn}
+      <p className="title is-4">
+        <i className="fa-solid fa-bars-staggered mr-2"></i>Filter
+      </p>
+      {renderResetBtn}
       <AccordionFilter
         items={brands}
         handleSelect={handleSelect}
@@ -87,15 +115,18 @@ const FilterAside = () => {
         name="category"
         checkboxes={selectedFilter.category}
       />
-
-      <p className="title is-5 my-5">Price:</p>
-      <Slider
-        min={isNaN(sliderMin) ? 0 : sliderMin}
-        max={isNaN(sliderMax) ? 0 : sliderMax}
-        value={price}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-      />
+      <Box>
+        <p className="title is-5 my-5">Price</p>
+        <Stack spacing={2} direction="row" alignItems="center" className="px-2">
+          <Slider
+            min={isNaN(sliderMin) ? 0 : sliderMin}
+            max={isNaN(sliderMax) ? 0 : sliderMax}
+            value={price}
+            onChange={handleChange}
+            valueLabelDisplay="auto"
+          />
+        </Stack>
+      </Box>
     </div>
   );
 };
