@@ -1,0 +1,15 @@
+@import "bulma/sass/utilities/mixins";
+
+.filter-aside__wrapper {
+    @include touch {
+        display: block;
+        max-width: 500px;
+        background-color: white;
+        padding: 30px;
+        position: fixed;
+        height: 100%;
+        left: 0;
+        top: 0;
+        overflow-y: auto;
+    }
+}

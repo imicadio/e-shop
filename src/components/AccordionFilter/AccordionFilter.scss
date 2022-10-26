@@ -1,0 +1,12 @@
+.accordrion-wrapper {
+  &.wrapper-filter {
+    max-height: 500px;
+    overflow: hidden;
+  }
+}
+.accordrion__details-wrapper {
+  &.wrapper-filter-details {
+    max-height: 450px;
+    overflow-y: auto;
+  }
+}

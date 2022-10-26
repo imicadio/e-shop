@@ -1,0 +1,13 @@
+.box-square {
+    aspect-ratio: 1;
+}
+
+.image-cover {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+}
+
+.position-inherit {
+    position: inherit;
+}

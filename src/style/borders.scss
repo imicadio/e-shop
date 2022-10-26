@@ -3,11 +3,23 @@
 $border-1: 1px solid $c-gray-d8;
 
 .border {
+    &-wrapper {
+        border: $border-1;
+    }
+
     &-top {
         border-top: $border-1;
     }
 
     &-bottom {
         border-bottom: $border-1;
+    }
+
+    &-left {
+        border-left: $border-1;
+    }
+
+    &-none {
+        border: 0;
     }
 }

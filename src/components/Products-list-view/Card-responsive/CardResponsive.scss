@@ -1,0 +1,9 @@
+@import '../../../style/index.scss';
+
+.card-responsive__wrapper {
+  &:nth-child(even) {
+    background-color: $c-white-dark;
+    border-top: $border-1;
+    border-bottom: $border-1;
+  }
+}

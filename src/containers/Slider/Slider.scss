@@ -1,6 +1,33 @@
+@import '../../style/index';
+
+$bullet-width: 14px;
+
 .slider-grid > .swiper-wrapper {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
   grid-auto-flow: column;
+}
+
+.swiper-pagination-bullet {
+  border-radius: 0;
+  width: $bullet-width;
+  height: $bullet-width;
+
+  &-active {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.custom-navigation {
+  background-color: $c-red;
+  padding: 16px;
+  width: 60px;
+  height: 60px;
+  font-weight: 900;
+  color: $c-white-dark;
+
+  &:hover {
+    background-color: $c-red-hover;
+  }
 }
