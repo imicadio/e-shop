@@ -1,13 +1,19 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import Container from "../../layout/Container/Container";
 import LinkTo from "../LinkTo/LinkTo";
 import Search from "../Search/Search";
 import ShowOnLogout from "../../components/ShowOnLogout/ShowOnLogout";
+import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
 
 import "./HeaderContent.scss";
 
-export default function headerContent() {
+import { selectCartTotalQuantity } from "../../redux/slice/cartSlice";
+const HeaderContent = () => {
+
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity);
+
   const openMobileMenu = () => {
     const isActive = "is-active";
 
@@ -19,6 +25,8 @@ export default function headerContent() {
     const burgerMenu = document.querySelector("#navbarMainMenu");
     burgerMenu.classList.toggle(isActive);
   };
+
+ 
 
   return (
     <Container customClass="header__content">
@@ -36,8 +44,9 @@ export default function headerContent() {
         <Search customClass="column field has-addons mb-0 header__search-wrapper is-align-items-center" />
 
         {/* BTN LOGIN */}
-        <ShowOnLogout>
-          <div className="column is-3 is-hidden-touch is-flex is-align-items-center is-justify-content-flex-end">
+
+        <div className="column is-3 is-hidden-touch is-flex is-align-items-center is-justify-content-flex-end">
+          <ShowOnLogout>
             <div className="mr-2">
               <p className="is-size-7 has-text-weight-medium">
                 Don't have an account?
@@ -56,10 +65,17 @@ export default function headerContent() {
             <LinkTo
               customClass="button is-primary"
               link="/login"
-              text="Login"
-            />
-          </div>
-        </ShowOnLogout>
+            >
+              Login
+            </LinkTo>
+          </ShowOnLogout>
+          <ShowOnLogin>
+            <LinkTo link="/cart" customClass="is-relative">
+              <div className="cart-badge badge">{cartTotalQuantity}</div>
+              <p>Cart <i className="fa-solid fa-bag-shopping ml-2"></i></p>
+            </LinkTo>
+          </ShowOnLogin>
+        </div>
 
         {/* RESPONSIVE BUTTON */}
         <div className="header__btn-actions-wrapper is-hidden-desktop column is-flex is-justify-content-end p-0">
@@ -81,3 +97,5 @@ export default function headerContent() {
     </Container>
   );
 }
+
+export default HeaderContent;

@@ -1,0 +1,50 @@
+@import "bulma/sass/utilities/mixins";
+@import '../../style/index';
+
+@include touch {
+  table {
+    min-width: 100% !important;
+  }
+
+  .table-wrapper {
+    max-width: 450px !important;
+    margin: 0 auto;
+  }
+
+  .table-thead {
+    border: none !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+  }
+
+  .table-row {
+    border-bottom: 3px solid #ddd !important;
+    display: block !important;
+    margin-bottom: 30px !important;
+    border: $border-1;
+    border-radius: 5px;
+  }
+
+  .table-td {
+    border-bottom: 1px solid #ddd !important;
+    display: block !important;
+    font-size: 0.8em !important;
+    text-align: right !important;
+
+    &::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    &:last-child {
+      border-bottom: 0 !important;
+    }
+  }
+}

@@ -1,13 +1,20 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
+import { useDispatch } from "react-redux";
 import { inputBetweenNumber } from "../../../hooks/numbers";
+import { ADD_TO_CART } from "../../../redux/slice/cartSlice";
 import { AmountContext } from "../../Products-list-view/Products-list/Products-list";
 
 const CartMinimal = () => {
-  const { amount, setAmount, stock } = useContext(AmountContext);
+  const dispatch = useDispatch();
+  const { amount, setAmount, stock, product } = useContext(AmountContext);
 
   const handleAmount = (e) => {
-    setAmount(inputBetweenNumber(e.target.value, stock))
+    setAmount(inputBetweenNumber(e.target.value, stock));
   };
+
+  const addToCart = useCallback(() => {
+    dispatch(ADD_TO_CART({ product, amount }));
+  }, []);
 
   return (
     <div className="card-normal__input-wrapper is-flex">
@@ -37,7 +44,11 @@ const CartMinimal = () => {
         </button>
       </div>
       <p className="title is-size-7 mx-1 my-auto">szt.</p>
-      <button type="button" className="button is-primary px-3">
+      <button
+        type="button"
+        className="button is-primary px-3"
+        onClick={addToCart}
+      >
         <i className="fa-solid fa-cart-arrow-down"></i>
       </button>
     </div>
