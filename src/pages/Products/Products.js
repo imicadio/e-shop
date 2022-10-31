@@ -16,6 +16,7 @@ import {
 import { floorDown } from "../../hooks/numbers";
 
 import "./Products.scss";
+import LayoutAside from "../../layout/LayoutAside/LayoutAside";
 
 export const Products = () => {
   const refFilter = useRef();
@@ -46,7 +47,7 @@ export const Products = () => {
   const handlePagination = (event, value) => setCurrentPage(value);
   const handleShowFilter = () => {
     const showElement = "show-filter";
-
+    
     const menuFilter = refFilter.current;
     const isActive = menuFilter.classList.contains(showElement);
 
@@ -74,55 +75,106 @@ export const Products = () => {
 
   return (
     <Container customClass="p-5 products__wrapper position-inherit">
-      <div className="main-content columns position-inherit">
-        <div
-          ref={refFilter}
-          className="column is-3 is-hidden-touch is-hidden-desktop-only position-inherit products__filter-aside"
-        >
+      <LayoutAside
+        refAside={refFilter}
+        customClass="products__wrapper"
+        customClassAside="products__filter-aside"
+        aside={
           <FilterAside
             products={filteredProducts}
             closeFilter={handleShowFilter}
           />
-        </div>
-        <div className="column is-9 products__content-wrapper">
-          <FilterList
-            onClickGrid={handleGrid}
-            hadleSearch={hadleSearch}
-            itemsPerPage={itemsPerPage}
-            handleItemsPerPage={handleSetItemsPerPage}
-            currentPage={currentPage}
-            handleCurrentPage={handleCurrentPage}
-            totalPages={totalPages}
-            showFilter={handleShowFilter}
-          />
-          <ProductsListing
-            products={filteredProducts}
-            isMobile={isMobile}
-            bigList={bigList}
-            currentPage={currentPage}
-            itemsPerPage={itemsPerPage}
-          />
+        }
+        customClassContent="products__content-wrapper"
+        content={
+          <React.Fragment>
+            <FilterList
+              onClickGrid={handleGrid}
+              hadleSearch={hadleSearch}
+              itemsPerPage={itemsPerPage}
+              handleItemsPerPage={handleSetItemsPerPage}
+              currentPage={currentPage}
+              handleCurrentPage={handleCurrentPage}
+              totalPages={totalPages}
+              showFilter={handleShowFilter}
+            />
+            <ProductsListing
+              products={filteredProducts}
+              isMobile={isMobile}
+              bigList={bigList}
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+            />
 
-          {/* <ProductsList
+            {/* <ProductsList
             customClass="products-list-wrapper"
             products={fetchProducts}
             isMobile={isMobile}
             bigList={bigList}
           /> */}
-        </div>
-      </div>
 
-      {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
-        <Stack spacing={2} className="mt-5">
-          <Pagination
-            count={floorDown(filteredProducts.length / itemsPerPage)}
-            page={currentPage}
-            onChange={handlePagination}
-            className="is-flex is-justify-content-end"
-          />
-        </Stack>
-      ) : null}
+            {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
+              <Stack spacing={2} className="mt-5">
+                <Pagination
+                  count={floorDown(filteredProducts.length / itemsPerPage)}
+                  page={currentPage}
+                  onChange={handlePagination}
+                  className="is-flex is-justify-content-end"
+                />
+              </Stack>
+            ) : null}
+          </React.Fragment>
+        }
+      />
     </Container>
+
+    // <Container customClass="p-5 products__wrapper position-inherit">
+    //   <div className="main-content columns position-inherit">
+    //     <div
+    //       ref={refFilter}
+    //       className="column is-3 is-hidden-touch is-hidden-desktop-only position-inherit products__filter-aside"
+    //     >
+    //
+    //     </div>
+    //     <div className="column is-9 products__content-wrapper">
+    //       <FilterList
+    //         onClickGrid={handleGrid}
+    //         hadleSearch={hadleSearch}
+    //         itemsPerPage={itemsPerPage}
+    //         handleItemsPerPage={handleSetItemsPerPage}
+    //         currentPage={currentPage}
+    //         handleCurrentPage={handleCurrentPage}
+    //         totalPages={totalPages}
+    //         showFilter={handleShowFilter}
+    //       />
+    //       <ProductsListing
+    //         products={filteredProducts}
+    //         isMobile={isMobile}
+    //         bigList={bigList}
+    //         currentPage={currentPage}
+    //         itemsPerPage={itemsPerPage}
+    //       />
+
+    //       {/* <ProductsList
+    //         customClass="products-list-wrapper"
+    //         products={fetchProducts}
+    //         isMobile={isMobile}
+    //         bigList={bigList}
+    //       /> */}
+
+    //       {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
+    //         <Stack spacing={2} className="mt-5">
+    //           <Pagination
+    //             count={floorDown(filteredProducts.length / itemsPerPage)}
+    //             page={currentPage}
+    //             onChange={handlePagination}
+    //             className="is-flex is-justify-content-end"
+    //           />
+    //         </Stack>
+    //       ) : null}
+    //     </div>
+    //   </div>
+    // </Container>
   );
 };
 

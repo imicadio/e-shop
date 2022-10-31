@@ -5,9 +5,7 @@ import Container from "../../layout/Container/Container";
 import { selectCartItems } from "../../redux/slice/cartSlice";
 
 const Cart = () => {
-    const cartItems = useSelector(selectCartItems)
-
-    
+    const cartItems = useSelector(selectCartItems)    
 
   return (
     <Container customClass="px-3 py-5">
