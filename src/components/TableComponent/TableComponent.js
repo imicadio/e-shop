@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Container from "../../layout/Container/Container";
 import {
   Table,
@@ -14,8 +14,8 @@ import {
 import { useScreen } from "../../hooks/useScreen";
 import TableToolbar from "./TableToolbar/TableToolbar";
 import TableHeader from "./TableHeader/TableHeader";
-import { useSelector } from "react-redux";
-import { selectCartItems } from "../../redux/slice/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_TO_CART, DECREASE_CART, REMOVE_FROM_CART } from "../../redux/slice/cartSlice";
 
 const TableComponent = ({ cartItems }) => {
   const { isTouch } = useScreen();
@@ -27,7 +27,7 @@ const TableComponent = ({ cartItems }) => {
 
   const createData = (id, title, brand, category, price) => {
     return {
-      id, 
+      id,
       title,
       brand,
       category,
@@ -36,6 +36,8 @@ const TableComponent = ({ cartItems }) => {
   };
 
   const rows = cartItems;
+
+  const dispatch = useDispatch();
 
   // const rows = [
   //   createData("Cupcake", "Cupcake", "Cupcake", 67),
@@ -127,6 +129,19 @@ const TableComponent = ({ cartItems }) => {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
+  const increaseItem = useCallback((row) => {    
+    dispatch(ADD_TO_CART({ product: row}))
+  }, [])
+
+  const decreaseItem = useCallback((row) => {    
+    dispatch(DECREASE_CART({ product: row}))
+  }, [])
+
+  const removeFromCart = useCallback((row) => {
+    dispatch(REMOVE_FROM_CART({ product: row }))
+  })
+
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -157,11 +172,11 @@ const TableComponent = ({ cartItems }) => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      // onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.index}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -171,6 +186,7 @@ const TableComponent = ({ cartItems }) => {
                           inputProps={{
                             "aria-labelledby": labelId,
                           }}
+                          onClick={(event) => handleClick(event, row.id)}
                         />
                       </TableCell>
                       <TableCell
@@ -184,7 +200,19 @@ const TableComponent = ({ cartItems }) => {
                       <TableCell align="right">{row.brand}</TableCell>
                       <TableCell align="right">{row.category}</TableCell>
                       <TableCell align="right">{row.price}</TableCell>
-                      <TableCell align="right">{row.cartQuantity}</TableCell>
+                      <TableCell
+                        align="right"
+                        className="is-flex is-flex-direction-row is-align-items-center"
+                      >
+                        <button type="button" className="button mr-2" onClick={() => increaseItem(row)}>
+                          <i className="fa-solid fa-plus"></i>
+                        </button>
+                        {row.cartQuantity}
+                        <button type="button" className="button ml-2" onClick={() => decreaseItem(row)}>
+                          <i className="fa-solid fa-minus"></i>
+                        </button>
+                      </TableCell>
+                      <TableCell align="right"><i class="fa-solid fa-trash" onClick={() => removeFromCart(row)}></i></TableCell>
                     </TableRow>
                   );
                 })}

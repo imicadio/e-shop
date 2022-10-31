@@ -12,9 +12,9 @@ const CartMinimal = () => {
     setAmount(inputBetweenNumber(e.target.value, stock));
   };
 
-  const addToCart = useCallback(() => {
+  const addToCart = () => {
     dispatch(ADD_TO_CART({ product, amount }));
-  }, []);
+  };
 
   return (
     <div className="card-normal__input-wrapper is-flex">

@@ -1,0 +1,24 @@
+@import "bulma/sass/utilities/mixins";
+
+.aside-mobile-visible {
+  @include touch {
+    flex-direction: column;
+  }
+
+  > div {
+    @include touch {
+      width: 100% !important;
+      flex: 1 !important;
+    }
+  }
+}
+
+.show-aside-mobile {
+  @include touch {
+    display: block !important;
+  }
+}
+
+.is-flex-1 {
+  flex: 1 !important;
+}
