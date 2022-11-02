@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { inputBetweenNumber } from "../../../hooks/numbers";
 import { ADD_TO_CART } from "../../../redux/slice/cartSlice";
-import { AmountContext } from "../../Products-list-view/Products-list/Products-list";
 
-const CartNormal = () => {
+const CartNormal = ({ amount, setAmount, stock, product }) => {
   const dispatch = useDispatch();
-  const { amount, setAmount, stock, product } = useContext(AmountContext);
 
   const handleAmount = (e) => {
     setAmount(inputBetweenNumber(e.target.value, stock))

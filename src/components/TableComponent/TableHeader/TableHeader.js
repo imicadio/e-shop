@@ -39,13 +39,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Quantity',
-  },
-  {
-    id: 'cartActions',
-    numeric: false,
-    disablePadding: false,
-    label: 'Action',
-  },
+  }
 ];
 
 const TableHeader = (props) => {

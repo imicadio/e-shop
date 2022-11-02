@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Container from "../../layout/Container/Container";
 import LinkTo from "../LinkTo/LinkTo";
@@ -9,10 +9,11 @@ import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
 
 import "./HeaderContent.scss";
 
-import { selectCartTotalQuantity } from "../../redux/slice/cartSlice";
+import { CALCULATE_TOTAL_QUANTITY, selectCartItems, selectCartTotalQuantity } from "../../redux/slice/cartSlice";
 const HeaderContent = () => {
-
+  const dispatch = useDispatch();
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
+  const cartItems = useSelector(selectCartItems);
 
   const openMobileMenu = () => {
     const isActive = "is-active";
@@ -26,7 +27,9 @@ const HeaderContent = () => {
     burgerMenu.classList.toggle(isActive);
   };
 
- 
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, [cartItems])
 
   return (
     <Container customClass="header__content">
@@ -62,24 +65,28 @@ const HeaderContent = () => {
               </p>
             </div>
 
-            <LinkTo
-              customClass="button is-primary"
-              link="/login"
-            >
+            <LinkTo customClass="button is-primary" link="/login">
               Login
             </LinkTo>
           </ShowOnLogout>
           <ShowOnLogin>
             <LinkTo link="/cart" customClass="is-relative">
               <div className="cart-badge badge">{cartTotalQuantity}</div>
-              <p>Cart <i className="fa-solid fa-bag-shopping ml-2"></i></p>
+              <p>
+                Cart <i className="fa-solid fa-bag-shopping ml-2"></i>
+              </p>
             </LinkTo>
           </ShowOnLogin>
         </div>
 
         {/* RESPONSIVE BUTTON */}
         <div className="header__btn-actions-wrapper is-hidden-desktop column is-flex is-justify-content-end p-0">
-          <i className="fa-solid fa-bag-shopping is-flex is-justify-content-center is-align-items-center header__action-bag"></i>
+          <LinkTo link="/cart" customClass="box-square is-flex is-justify-content-center is-align-items-center">
+            <div className="is-relative">
+              <div className="cart-badge badge">{cartTotalQuantity}</div>
+              <i className="fa-solid fa-bag-shopping header__action-bag"></i>
+            </div>
+          </LinkTo>
           <span
             role="button"
             className="navbar-burger burger ml-0 full-height"
@@ -96,6 +103,6 @@ const HeaderContent = () => {
       </div>
     </Container>
   );
-}
+};
 
 export default HeaderContent;

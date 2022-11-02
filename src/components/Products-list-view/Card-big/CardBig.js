@@ -8,6 +8,7 @@ import { AmountContext } from "../Products-list/Products-list";
 import './CardBig.scss';
 
 const CardBig = ({
+  id,
   title,
   description,
   price,
@@ -20,6 +21,7 @@ const CardBig = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
+  const link = '/product/' + id;
   const brutto = useBrutto(price);
 
   const amountBrutto = (amount * brutto).toFixed(2);
@@ -27,17 +29,17 @@ const CardBig = ({
 
   return (
     <div className="columns border-wrapper card-big__wrapper mt-1">
-      <LinkTo customClass="column is-2 box-square">
+      <LinkTo link={link} customClass="column is-2 box-square">
         <img src={thumbnail} alt={title} className="image-cover" />
       </LinkTo>
       <div className="column is-flex is-flex-direction-column is-justify-content-center is-gap">
-        <LinkTo>
+        <LinkTo link={link}>
           <h2 className="title is-5 is-uppercase has-text-weight-semibold">
             {title}
           </h2>
           <h3 className="subtitle is-7">{category}</h3>
         </LinkTo>
-        <LinkTo>
+        <LinkTo link={link}>
           <p className="subtitle is-6 mb-1">{description}</p>
           <Rating
             name="half-rating-read"

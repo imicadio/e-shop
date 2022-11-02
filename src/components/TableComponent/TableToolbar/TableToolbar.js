@@ -4,7 +4,7 @@ import { alpha } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
-const TableToolbar = ({ numSelected }) => {
+const TableToolbar = ({ numSelected, handleDelete }) => {
   return (
     <Toolbar
       sx={{
@@ -39,7 +39,7 @@ const TableToolbar = ({ numSelected }) => {
         </Typography>
       )}
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Delete" onClick={handleDelete}>
           <IconButton>
             <DeleteIcon />
           </IconButton>

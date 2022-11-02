@@ -15,7 +15,12 @@ import { useScreen } from "../../hooks/useScreen";
 import TableToolbar from "./TableToolbar/TableToolbar";
 import TableHeader from "./TableHeader/TableHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_TO_CART, DECREASE_CART, REMOVE_FROM_CART } from "../../redux/slice/cartSlice";
+import {
+  ADD_TO_CART,
+  DECREASE_CART,
+  REMOVE_FROM_CART,
+} from "../../redux/slice/cartSlice";
+import ModalConfirm from "../Modal/ModalConfirm/ModalConfirm";
 
 const TableComponent = ({ cartItems }) => {
   const { isTouch } = useScreen();
@@ -24,6 +29,7 @@ const TableComponent = ({ cartItems }) => {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
 
   const createData = (id, title, brand, category, price) => {
     return {
@@ -91,7 +97,7 @@ const TableComponent = ({ cartItems }) => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -129,18 +135,30 @@ const TableComponent = ({ cartItems }) => {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  const increaseItem = useCallback((row) => {    
-    dispatch(ADD_TO_CART({ product: row}))
-  }, [])
+  const increaseItem = useCallback((row) => {
+    dispatch(ADD_TO_CART({ product: row }));
+  }, []);
 
-  const decreaseItem = useCallback((row) => {    
-    dispatch(DECREASE_CART({ product: row}))
-  }, [])
+  const decreaseItem = useCallback((row) => {
+    dispatch(DECREASE_CART({ product: row }));
+  }, []);
 
   const removeFromCart = useCallback((row) => {
-    dispatch(REMOVE_FROM_CART({ product: row }))
-  })
+    dispatch(REMOVE_FROM_CART({ product: row }));
+  });
 
+  const handleClose = (value) => {
+    if (value === true) {
+      cartItems.map((product) => {
+        const productIndex = selected.includes(product.id);
+        if (productIndex) dispatch(REMOVE_FROM_CART({ product }));
+      });
+      setSelected([]);
+    }
+    setOpen(false);
+  };
+
+  const handleDelete = () => setOpen(true);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -148,8 +166,16 @@ const TableComponent = ({ cartItems }) => {
 
   return (
     <Box sx={{ width: "100%" }}>
+      <ModalConfirm
+        open={open}
+        handleClose={handleClose}
+        text="delete from cart"
+      />
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <TableToolbar numSelected={selected.length} />
+        <TableToolbar
+          numSelected={selected.length}
+          handleDelete={handleDelete}
+        />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <TableHeader
@@ -204,15 +230,22 @@ const TableComponent = ({ cartItems }) => {
                         align="right"
                         className="is-flex is-flex-direction-row is-align-items-center"
                       >
-                        <button type="button" className="button mr-2" onClick={() => increaseItem(row)}>
+                        <button
+                          type="button"
+                          className="button mr-2"
+                          onClick={() => increaseItem(row)}
+                        >
                           <i className="fa-solid fa-plus"></i>
                         </button>
                         {row.cartQuantity}
-                        <button type="button" className="button ml-2" onClick={() => decreaseItem(row)}>
+                        <button
+                          type="button"
+                          className="button ml-2"
+                          onClick={() => decreaseItem(row)}
+                        >
                           <i className="fa-solid fa-minus"></i>
                         </button>
                       </TableCell>
-                      <TableCell align="right"><i class="fa-solid fa-trash" onClick={() => removeFromCart(row)}></i></TableCell>
                     </TableRow>
                   );
                 })}
