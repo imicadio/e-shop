@@ -5,6 +5,7 @@ import {
   fetchCategories,
   fetchMaxPrice,
   fetchMinPrice,
+  fetchSearch,
 } from "../../redux/slice/filterSlice";
 
 import { useScreen } from "../../hooks/useScreen";
@@ -33,6 +34,8 @@ const FilterAside = ({ closeFilter }) => {
   const products = useSelector(fetchProducts);
   const sliderMin = useSelector(fetchMinPrice);
   const sliderMax = useSelector(fetchMaxPrice);
+  
+  const search = useSelector(fetchSearch);
 
   const brands = useSelector(fetchBrands);
   const categories = useSelector(fetchCategories);
@@ -82,6 +85,9 @@ const FilterAside = ({ closeFilter }) => {
   }, [sliderMax, sliderMin]);
 
   useEffect(() => {
+
+    console.log('search ')
+
     dispatch(
       FILTER_BY_CATEGORIES({ products, filters: selectedFilter, price })
     );
@@ -91,7 +97,7 @@ const FilterAside = ({ closeFilter }) => {
     else if (price[0] !== sliderMin || price[1] !== sliderMax)
       setShowResetBtn(true);
     else setShowResetBtn(false);
-  }, [selectedFilter, price]);
+  }, [selectedFilter, price, search]);
 
   return (
     <div className="filter-aside__wrapper">

@@ -64,7 +64,7 @@ export const Products = () => {
   };
 
   useEffect(() => {
-    dispatch(FILTER_BY_SEARCH({ products, search }));
+    dispatch(FILTER_BY_SEARCH({ search }));
   }, [dispatch, products, search]);
 
   useEffect(() => {
