@@ -1,29 +1,32 @@
 import React from "react";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useRoutes } from "react-router-dom";
 import { Header, Footer } from "./containers/index";
-import { Home, Contact, Products, Login, Register, Cart, CheckoutDetails, ProductDetails } from "./pages/index";
-
+import {
+  Home,
+  Contact,
+  Products,
+  Login,
+  Register,
+  Cart,
+  CheckoutDetails,
+  ProductDetails,
+} from "./pages/index";
 
 import "./App.scss";
 import "./style/index.scss";
+import routes from "./routes";
+
 
 function App() {
+  const renderRoutes = useRoutes(routes);
+  
   return (
-    <BrowserRouter>
+    <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout-details" element={<CheckoutDetails />} />
-      </Routes>
+      {renderRoutes}
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }
 

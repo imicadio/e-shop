@@ -4,6 +4,7 @@ import Container from "../../layout/Container/Container";
 import { useProducts } from "../../hooks/realtime-db/useProducts/useProducts";
 
 import "./Home.scss";
+import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 
 const Home = () => {
   const [isLoading, loadingError, slides] = useProducts(3);

@@ -21,7 +21,7 @@ const CardBig = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
-  const link = '/product/' + id;
+  const link = '/products/' + id;
   const brutto = useBrutto(price);
 
   const amountBrutto = (amount * brutto).toFixed(2);

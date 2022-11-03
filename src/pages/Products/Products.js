@@ -7,6 +7,7 @@ import { fetchProducts } from "../../redux/slice/listProductSlice";
 import ProductsListing from "../../containers/ProductsListing/ProductsListing";
 import FilterAside from "../../components/Filter-aside/Filter-aside";
 import { Stack, Pagination } from "@mui/material";
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 
 import {
   FILTER_BY_SEARCH,
@@ -47,7 +48,7 @@ export const Products = () => {
   const handlePagination = (event, value) => setCurrentPage(value);
   const handleShowFilter = () => {
     const showElement = "show-filter";
-    
+
     const menuFilter = refFilter.current;
     const isActive = menuFilter.classList.contains(showElement);
 
@@ -74,107 +75,61 @@ export const Products = () => {
   }, [filteredProducts]);
 
   return (
-    <Container customClass="p-5 products__wrapper position-inherit">
-      <LayoutAside
-        refAside={refFilter}
-        customClass="products__wrapper"
-        customClassAside="products__filter-aside"
-        aside={
-          <FilterAside
-            products={filteredProducts}
-            closeFilter={handleShowFilter}
-          />
-        }
-        customClassContent="products__content-wrapper"
-        content={
-          <React.Fragment>
-            <FilterList
-              onClickGrid={handleGrid}
-              hadleSearch={hadleSearch}
-              itemsPerPage={itemsPerPage}
-              handleItemsPerPage={handleSetItemsPerPage}
-              currentPage={currentPage}
-              handleCurrentPage={handleCurrentPage}
-              totalPages={totalPages}
-              showFilter={handleShowFilter}
-            />
-            <ProductsListing
+    <>
+      <Container customClass="p-5 products__wrapper position-inherit" breadcrumbs>
+        <LayoutAside
+          refAside={refFilter}
+          customClass="products__wrapper"
+          customClassAside="products__filter-aside"
+          aside={
+            <FilterAside
               products={filteredProducts}
-              isMobile={isMobile}
-              bigList={bigList}
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPage}
+              closeFilter={handleShowFilter}
             />
+          }
+          customClassContent="products__content-wrapper"
+          content={
+            <React.Fragment>
+              <FilterList
+                onClickGrid={handleGrid}
+                hadleSearch={hadleSearch}
+                itemsPerPage={itemsPerPage}
+                handleItemsPerPage={handleSetItemsPerPage}
+                currentPage={currentPage}
+                handleCurrentPage={handleCurrentPage}
+                totalPages={totalPages}
+                showFilter={handleShowFilter}
+              />
+              <ProductsListing
+                products={filteredProducts}
+                isMobile={isMobile}
+                bigList={bigList}
+                currentPage={currentPage}
+                itemsPerPage={itemsPerPage}
+              />
 
-            {/* <ProductsList
+              {/* <ProductsList
             customClass="products-list-wrapper"
             products={fetchProducts}
             isMobile={isMobile}
             bigList={bigList}
           /> */}
 
-            {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
-              <Stack spacing={2} className="mt-5">
-                <Pagination
-                  count={floorDown(filteredProducts.length / itemsPerPage)}
-                  page={currentPage}
-                  onChange={handlePagination}
-                  className="is-flex is-justify-content-end"
-                />
-              </Stack>
-            ) : null}
-          </React.Fragment>
-        }
-      />
-    </Container>
-
-    // <Container customClass="p-5 products__wrapper position-inherit">
-    //   <div className="main-content columns position-inherit">
-    //     <div
-    //       ref={refFilter}
-    //       className="column is-3 is-hidden-touch is-hidden-desktop-only position-inherit products__filter-aside"
-    //     >
-    //
-    //     </div>
-    //     <div className="column is-9 products__content-wrapper">
-    //       <FilterList
-    //         onClickGrid={handleGrid}
-    //         hadleSearch={hadleSearch}
-    //         itemsPerPage={itemsPerPage}
-    //         handleItemsPerPage={handleSetItemsPerPage}
-    //         currentPage={currentPage}
-    //         handleCurrentPage={handleCurrentPage}
-    //         totalPages={totalPages}
-    //         showFilter={handleShowFilter}
-    //       />
-    //       <ProductsListing
-    //         products={filteredProducts}
-    //         isMobile={isMobile}
-    //         bigList={bigList}
-    //         currentPage={currentPage}
-    //         itemsPerPage={itemsPerPage}
-    //       />
-
-    //       {/* <ProductsList
-    //         customClass="products-list-wrapper"
-    //         products={fetchProducts}
-    //         isMobile={isMobile}
-    //         bigList={bigList}
-    //       /> */}
-
-    //       {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
-    //         <Stack spacing={2} className="mt-5">
-    //           <Pagination
-    //             count={floorDown(filteredProducts.length / itemsPerPage)}
-    //             page={currentPage}
-    //             onChange={handlePagination}
-    //             className="is-flex is-justify-content-end"
-    //           />
-    //         </Stack>
-    //       ) : null}
-    //     </div>
-    //   </div>
-    // </Container>
+              {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
+                <Stack spacing={2} className="mt-5">
+                  <Pagination
+                    count={floorDown(filteredProducts.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handlePagination}
+                    className="is-flex is-justify-content-end"
+                  />
+                </Stack>
+              ) : null}
+            </React.Fragment>
+          }
+        />
+      </Container>
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ const ProductDetails = () => {
   // { amount, setAmount, stock, product }
   const [amount, setAmount] = useState(1);
   return (
-    <Container customClass="px-3 py-5">
+    <Container customClass="px-3 py-5" breadcrumbs>
       {!product ? (
         <Loader />
       ) : (
