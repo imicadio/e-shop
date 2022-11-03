@@ -13,6 +13,7 @@ import {
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
+import ShowOnLogout from "../ShowOnLogout/ShowOnLogout";
 
 const Navigation = () => {
   const [userName, setUserName] = useState("");
@@ -80,12 +81,16 @@ const Navigation = () => {
           <NavLink to="/products" className="navbar-item">
             Products
           </NavLink>
-          <ShowOnLogin>
-            <div className="navbar-item">{userName}</div>
+          <ShowOnLogin>            
             <div type="button" className="navbar-item" onClick={logout}>
               Sign out
             </div>
           </ShowOnLogin>
+          <ShowOnLogout>
+            <NavLink to="/login" className="navbar-item">
+              Login
+            </NavLink>
+          </ShowOnLogout>
 
           {/* <div className="navbar-item has-dropdown is-hoverable">
             <Link className="navbar-link">More</Link>

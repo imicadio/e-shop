@@ -7,9 +7,6 @@ const Breadcrumbs = ({ customClass }) => {
   const breadcrumbs = useBreadcrumbs();
   const cssStyles = classNames(customClass)
 
-
-    console.log(breadcrumbs)
-
   return (
     <p className={cssStyles}>
       {breadcrumbs.map(({ breadcrumb, match }, index) => (

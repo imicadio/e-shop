@@ -9,7 +9,11 @@ import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
 
 import "./HeaderContent.scss";
 
-import { CALCULATE_TOTAL_QUANTITY, selectCartItems, selectCartTotalQuantity } from "../../redux/slice/cartSlice";
+import {
+  CALCULATE_TOTAL_QUANTITY,
+  selectCartItems,
+  selectCartTotalQuantity,
+} from "../../redux/slice/cartSlice";
 const HeaderContent = () => {
   const dispatch = useDispatch();
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
@@ -29,7 +33,7 @@ const HeaderContent = () => {
 
   useEffect(() => {
     dispatch(CALCULATE_TOTAL_QUANTITY());
-  }, [cartItems])
+  }, [cartItems]);
 
   return (
     <Container customClass="header__content">
@@ -55,13 +59,10 @@ const HeaderContent = () => {
                 Don't have an account?
               </p>
               <p className="has-text-weight-semibold">
-                Join us{" "}
-                <LinkTo
-                  customClass="has-text-weight-bold"
-                  link="/register"
-                  text="Register"
-                />
-                !
+                Join us!
+                <LinkTo customClass="has-text-weight-bold ml-1" link="/register">
+                  Register
+                </LinkTo>
               </p>
             </div>
 
@@ -81,12 +82,17 @@ const HeaderContent = () => {
 
         {/* RESPONSIVE BUTTON */}
         <div className="header__btn-actions-wrapper is-hidden-desktop column is-flex is-justify-content-end p-0">
-          <LinkTo link="/cart" customClass="box-square is-flex is-justify-content-center is-align-items-center">
-            <div className="is-relative">
-              <div className="cart-badge badge">{cartTotalQuantity}</div>
-              <i className="fa-solid fa-bag-shopping header__action-bag"></i>
-            </div>
-          </LinkTo>
+          <ShowOnLogin>
+            <LinkTo
+              link="/cart"
+              customClass="box-square is-flex is-justify-content-center is-align-items-center"
+            >
+              <div className="is-relative">
+                <div className="cart-badge badge">{cartTotalQuantity}</div>
+                <i className="fa-solid fa-bag-shopping header__action-bag"></i>
+              </div>
+            </LinkTo>
+          </ShowOnLogin>
           <span
             role="button"
             className="navbar-burger burger ml-0 full-height"
