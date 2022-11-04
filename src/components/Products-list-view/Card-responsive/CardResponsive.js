@@ -47,7 +47,7 @@ const CardResponsive = ({
           <h3 className="title is-5 mb-2">{category}</h3>
           <Rating
             name="half-rating-read"
-            defaultValue={rating}
+            defaultValue={rating | ""}
             precision={0.5}
             readOnly
             size="small"

@@ -13,6 +13,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import "./Filter-list.scss";
 import { inputBetweenNumber } from "../../../hooks/numbers";
+import Search from "../../Search/Search";
 
 const FitlerList = ({
   onClickGrid,
@@ -23,6 +24,8 @@ const FitlerList = ({
   handleCurrentPage,
   totalPages,
   showFilter,
+  search,
+  handleClearSearch
 }) => {
   return (
     <div className="columns box product-list__filter-container">
@@ -60,7 +63,14 @@ const FitlerList = ({
         <p>of {totalPages} pages</p>
       </div>
 
-      <div className="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center is-hidden-touch">
+      <Search
+        customClass="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center is-hidden-touch"
+        wordEntered={search}
+        handleSearch={hadleSearch}
+        handleClear={handleClearSearch}
+      />
+
+      {/* <div className="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center is-hidden-touch">
         <div className="control is-small full-width">
           <input
             className="input is-small"
@@ -69,7 +79,7 @@ const FitlerList = ({
             onChange={(e) => hadleSearch(e.target.value)}
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="block is-flex is-align-items-center is-justify-content-end is-hidden-touch mb-0">
         <IconButton

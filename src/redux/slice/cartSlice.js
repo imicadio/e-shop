@@ -107,7 +107,6 @@ const cartSlice = createSlice({
     },
 
     SAVE_URL: (state, action) => {
-      console.log(action.payload);
       state.previousURL = action.payload;
     },
   },

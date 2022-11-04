@@ -68,12 +68,11 @@ const filterSlice = createSlice({
         state.filteredProducts = products.filter((product) => {
           const isArrayValid = [];
 
-          console.log(price[0] <= product.price && product.price <= price[1])
-
-          price[0] <= product.price && product.price <= price[1] ? isArrayValid.push(true) : isArrayValid.push(false);
+          price[0] <= product.price && product.price <= price[1]
+            ? isArrayValid.push(true)
+            : isArrayValid.push(false);
 
           if (state.search.length > 0) {
-            
             if (product.title.toUpperCase().includes(state.search)) {
               isArrayValid.push(true);
             } else {

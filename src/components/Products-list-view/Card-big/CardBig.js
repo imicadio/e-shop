@@ -43,7 +43,7 @@ const CardBig = ({
           <p className="subtitle is-6 mb-1">{description}</p>
           <Rating
             name="half-rating-read"
-            defaultValue={rating}
+            defaultValue={rating || ""}
             precision={0.5}
             readOnly
             size="small"

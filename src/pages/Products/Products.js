@@ -33,9 +33,9 @@ export const Products = () => {
   const filteredProducts = useSelector(selectFilteredProducts);
 
   const handleGrid = (value) => setBigList(value);
-  const hadleSearch = (value) => {
+  const hadleSearch = (event) => {
     setCurrentPage(1);
-    setSearch(value);
+    setSearch(event.target.value);
   };
   const handleSetItemsPerPage = (value) => {
     setItemsPerPage(value);
@@ -61,6 +61,10 @@ export const Products = () => {
       html.classList.add("no-scroll");
       menuFilter.classList.add(showElement);
     }
+  };
+
+  const handleClearSearch = () => {
+    setSearch("");
   };
 
   useEffect(() => {
@@ -99,6 +103,8 @@ export const Products = () => {
                 handleCurrentPage={handleCurrentPage}
                 totalPages={totalPages}
                 showFilter={handleShowFilter}
+                search={search}
+                handleClearSearch={handleClearSearch}
               />
               <ProductsListing
                 products={filteredProducts}

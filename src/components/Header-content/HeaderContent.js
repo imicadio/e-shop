@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Container from "../../layout/Container/Container";
@@ -14,6 +14,7 @@ import {
   selectCartItems,
   selectCartTotalQuantity,
 } from "../../redux/slice/cartSlice";
+import { fetchProducts } from "../../redux/slice/listProductSlice";
 const HeaderContent = () => {
   const dispatch = useDispatch();
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
@@ -30,6 +31,59 @@ const HeaderContent = () => {
     const burgerMenu = document.querySelector("#navbarMainMenu");
     burgerMenu.classList.toggle(isActive);
   };
+
+  // SEARCH
+
+  const [wordEntered, setWordEntered] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+
+  const products = useSelector(fetchProducts);
+
+  const handleSearch = (event) => {
+    const searchWord = event.target.value;
+    setWordEntered(searchWord);
+    const newFilter = products.filter((value) => {
+      return value.title.toLowerCase().includes(searchWord.toLowerCase());
+    });
+
+    if (searchWord === "") {
+      setFilteredData([]);
+    } else {
+      setFilteredData(newFilter);
+    }
+  };
+
+  const handleClear = () => {
+    setWordEntered("");
+    setFilteredData([]);
+  };
+
+  const renderSearchResults =
+    filteredData.length > 0 ? (
+      <div className="search-results border-wrapper" onClick={handleClear}>
+        <div className="results">
+          {filteredData.map((product) => (
+            <LinkTo
+              link={"/products/" + product.id}
+              customClass="search-product__wrapper my-2"
+              key={product.id}
+            >
+              <img
+                className="search-product__img"
+                src={product.thumbnail}
+                alt={product.title}
+              />
+              <div className="">
+                <h2>{product.title}</h2>
+                <h3>{product.price}$</h3>
+              </div>
+            </LinkTo>
+          ))}
+        </div>
+      </div>
+    ) : null;
+
+  // END SEARCH
 
   useEffect(() => {
     dispatch(CALCULATE_TOTAL_QUANTITY());
@@ -48,7 +102,15 @@ const HeaderContent = () => {
         </a>
 
         {/* SEARCH */}
-        <Search customClass="column field has-addons mb-0 header__search-wrapper is-align-items-center" />
+        <Search
+          customClass="column field has-addons mb-0 header__search-wrapper is-align-items-center"
+          wordEntered={wordEntered}
+          handleSearch={handleSearch}
+          handleClear={handleClear}
+          btnSearch
+        >
+          {renderSearchResults}
+        </Search>
 
         {/* BTN LOGIN */}
 
@@ -60,7 +122,10 @@ const HeaderContent = () => {
               </p>
               <p className="has-text-weight-semibold">
                 Join us!
-                <LinkTo customClass="has-text-weight-bold ml-1" link="/register">
+                <LinkTo
+                  customClass="has-text-weight-bold ml-1"
+                  link="/register"
+                >
                   Register
                 </LinkTo>
               </p>
