@@ -1,8 +1,8 @@
 # Eshop
 
 This project was:
-- Redux/toolkit[https://redux-toolkit.js.org/]
-- bulma[https://bulma.io/]
+- [Redux/toolkit](https://redux-toolkit.js.org/)
+- [bulma](https://bulma.io/)
 - [material ui](https://mui.com/)
 - [font awesome](https://fontawesome.com/)
 
@@ -42,7 +42,8 @@ This project was:
 
 ## Default login 
 
-Login: test@test.com
+Login: test@test.com    
+
 Password: qwert123
 
 ## Available Scripts
