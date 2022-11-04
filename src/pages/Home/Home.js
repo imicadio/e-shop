@@ -4,11 +4,9 @@ import Container from "../../layout/Container/Container";
 import { useProducts } from "../../hooks/realtime-db/useProducts/useProducts";
 
 import "./Home.scss";
-import { useScreen } from "../../hooks/useScreen";
 import { Typography } from '@mui/material';
 
 const Home = () => {
-  const { isMobile } = useScreen();
 
   const [mainSliderLoading, mainLoadingError, mainSlides] = useProducts(3);
 
@@ -66,7 +64,6 @@ const Home = () => {
           CSScustomSwiper
           customOptions={{
             slidesPerView: 2,
-            slidesPerColumn: 2,
             slidesPerGroup: 2,
             grid: {
               rows: 1,

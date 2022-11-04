@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CartNormal from "../../components/Add-to-cart/Cart-normal/Cart-normal";
 import Loader from "../../components/Loader/Loader";
+import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
 import Container from "../../layout/Container/Container";
 import { fetchProducts } from "../../redux/slice/listProductSlice";
 import Gallery from "./Gallery/Gallery";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const products = useSelector(fetchProducts);
   const [product, setProduct] = useState(null);
@@ -41,12 +41,14 @@ const ProductDetails = () => {
             </h3>
             <h4 className="title is-5">{product.price}$</h4>
             <p className="mb-5">{product.description}</p>
-            <CartNormal
-              amount={amount}
-              setAmount={setAmount}
-              stock={product.stock}
-              product={product}
-            />
+            <ShowOnLogin>
+              <CartNormal
+                amount={amount}
+                setAmount={setAmount}
+                stock={product.stock}
+                product={product}
+              />
+            </ShowOnLogin>
           </div>
         </div>
       )}

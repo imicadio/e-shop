@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useScreen } from "../../hooks/useScreen";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -42,7 +42,6 @@ const Slider = ({
 
   const gridView = grid && {
     slidesPerView: 2,
-    slidesPerColumn: 2,
     slidesPerGroup: 6,
     grid: {
       rows: 2,
