@@ -1,11 +1,15 @@
-@import './colors';
+@import "./colors";
 
 .bg {
-    &--red {
-        background-color: $c-red;
-    }
+  &--red {
+    background-color: $c-red;
+  }
 
-    &--gray-light {
-        background-color: $c-white-dark;
-    }
+  &--gray-light {
+    background-color: $c-white-dark;
+  }
+
+  &--black-middle {
+    background-color: $c-black-middle;
+  }
 }
