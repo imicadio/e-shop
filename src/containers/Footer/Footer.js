@@ -3,9 +3,11 @@ import Container from "../../layout/Container/Container";
 import { Box, Grid, Link } from '@mui/material';
 import LinkTo from "../../components/LinkTo/LinkTo";
 
+import './Footer.scss';
+
 const Footer = () => {
   return (
-    <Container fluid element="footer">
+    <Container fluid element="footer" customClass="footer">
       <Box
         px={{ xs: 3, sm: 10 }}
         pt={{ xs: 5, sm: 10 }}       

@@ -1,0 +1,16 @@
+.swiper-slide.swiper-slide__custom {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: auto !important;
+
+  .card-normal__button {
+    width: auto;
+    height: auto;
+    padding: 7px;
+  }
+
+  .button {
+    flex: 1;
+  }
+}

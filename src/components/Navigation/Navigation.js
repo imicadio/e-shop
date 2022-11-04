@@ -82,12 +82,12 @@ const Navigation = () => {
             Products
           </NavLink>
           <ShowOnLogin>            
-            <div type="button" className="navbar-item" onClick={logout}>
-              Sign out
+            <div type="button" className="navbar-item is-clickable" onClick={logout}>
+              Logout
             </div>
           </ShowOnLogin>
           <ShowOnLogout>
-            <NavLink to="/login" className="navbar-item">
+            <NavLink to="/login" className="navbar-item is-hidden-desktop">
               Login
             </NavLink>
           </ShowOnLogout>

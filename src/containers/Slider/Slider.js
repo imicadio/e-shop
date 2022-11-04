@@ -7,7 +7,8 @@ import SwiperCore, { Autoplay, Pagination, Navigation, Grid } from "swiper";
 import classnames from "classnames";
 import "swiper/swiper-bundle.css";
 import "./Slider.scss";
-import Box from "./Box/Box";
+import Box from "../../components/Box/Box";
+
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
@@ -24,14 +25,18 @@ const Slider = ({
   type,
   loop,
   autoplay,
+  customOptions,
+  CSScustomSwiper,
+  paginationBottom
 }) => {
   const { isMobile } = useScreen();
 
   const CSSclassName = classnames(customClass, {
     [`slider-grid`]: isMobile && grid,
+    [`slider-pagination-boottom`]: paginationBottom
   });
 
-  const CSSslidesGrid = grid ? "swiper-slide-grid__wrapper" : null;
+  const CSScustomSwiperSlide = CSScustomSwiper ? "swiper-slide__custom" : null;
 
   const swiperRef = React.useRef(null);
 
@@ -72,10 +77,11 @@ const Slider = ({
         }
       : false,
     ...gridView,
+    ...customOptions
   };
 
   const renderSlides = slides.map((slide, index) => (
-    <SwiperSlide key={index}>
+    <SwiperSlide key={index} className={CSScustomSwiperSlide}>
       <Box type={type} slide={slide} />
     </SwiperSlide>
   ));
@@ -84,13 +90,13 @@ const Slider = ({
     ? classnames("swiper-button-prev", {
         [`custom-navigation`]: customNav,
       })
-    : "swiper-button-prev";
+    : null;
 
   const cssButtonNext = customNav
     ? classnames("swiper-button-next", {
         [`custom-navigation`]: customNav,
       })
-    : "swiper-button-next";
+    : null;
 
   const renderNavigation = !isMobile && navigation && (
     <React.Fragment>

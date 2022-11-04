@@ -5,7 +5,8 @@ import { Rating } from "@mui/material";
 import { useBrutto } from "../../../hooks/useBrutto";
 import { AmountContext } from "../Products-list/Products-list";
 
-import './CardBig.scss';
+import "./CardBig.scss";
+import ShowOnLogin from "../../ShowOnLogin/ShowOnLogin";
 
 const CardBig = ({
   id,
@@ -21,7 +22,7 @@ const CardBig = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
-  const link = '/products/' + id;
+  const link = "/products/" + id;
   const brutto = useBrutto(price);
 
   const amountBrutto = (amount * brutto).toFixed(2);
@@ -51,7 +52,6 @@ const CardBig = ({
         </LinkTo>
       </div>
       <div className="column is-4 big-card__info-wrapper bg--gray-light border-left">
-
         <div className="block columns">
           <div className="column is-8">
             <p className="title is-3">
@@ -96,14 +96,16 @@ const CardBig = ({
           </div>
         </div>
 
-        <div className="block columns">
-          <div className="column">
-            <AddToCart
-              customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center"
-              type="cart-normal"
-            />
+        <ShowOnLogin>
+          <div className="block columns">
+            <div className="column">
+              <AddToCart
+                customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center"
+                type="cart-normal"
+              />
+            </div>
           </div>
-        </div>
+        </ShowOnLogin>
       </div>
     </div>
   );

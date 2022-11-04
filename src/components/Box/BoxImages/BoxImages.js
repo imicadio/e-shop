@@ -1,5 +1,5 @@
 import React from "react";
-import LinkTo from "../../../../components/LinkTo/LinkTo";
+import LinkTo from "../../LinkTo/LinkTo";
 
 const BoxImages = ({ slide }) => {
   return (
