@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useScreen } from "../../hooks/useScreen";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
+import SwiperCore, { Autoplay, Pagination, Navigation, Grid } from "swiper";
 
 import classnames from "classnames";
 import "swiper/swiper-bundle.css";
@@ -22,18 +22,40 @@ const Slider = ({
   navigationName,
   customNav,
   type,
+  loop,
+  autoplay,
 }) => {
+  const { isMobile } = useScreen();
+
   const CSSclassName = classnames(customClass, {
-    [`slider-grid`]: grid,
+    [`slider-grid`]: isMobile && grid,
   });
 
-  const { isMobile } = useScreen();
+  const CSSslidesGrid = grid ? "swiper-slide-grid__wrapper" : null;
 
   const swiperRef = React.useRef(null);
 
   const gridView = grid && {
     slidesPerView: 2,
-    slidesPerGroup: 2,
+    slidesPerColumn: 2,
+    slidesPerGroup: 6,
+    grid: {
+      rows: 2,
+    },
+    modules: [Grid, Pagination],
+    spaceBetween: 20,
+
+    breakpoints: {
+      600: {
+        slidesPerView: 4,
+        slidesPerGroup: 4,
+        spaceBetween: 30,
+        grid: {
+          rows: 1,
+        },
+        modules: [Grid, Pagination],
+      },
+    },
   };
 
   const swiperParams = {
@@ -42,7 +64,13 @@ const Slider = ({
     //   delay: 2500,
     //   disableOnInteraction: false,
     // },
-    navigation: isMobile ? false : true,
+    navigation: navigation ? (isMobile ? false : true) : false,
+    loop: loop ? true : false,
+    autoplay: autoplay
+      ? {
+          delay: 5000,
+        }
+      : false,
     ...gridView,
   };
 

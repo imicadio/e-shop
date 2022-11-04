@@ -4,12 +4,16 @@ import Container from "../../layout/Container/Container";
 import { useProducts } from "../../hooks/realtime-db/useProducts/useProducts";
 
 import "./Home.scss";
-import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
+import { useScreen } from "../../hooks/useScreen";
 
 const Home = () => {
-  const [isLoading, loadingError, slides] = useProducts(3);
+  const { isMobile } = useScreen();
 
-  if (!isLoading) {
+  const [mainSliderLoading, mainLoadingError, mainSlides] = useProducts(3);
+
+  const [loadingSlider1, loadingErrorSlider1, slides1] = useProducts(18);
+
+  if (!mainSliderLoading || !loadingSlider1) {
     return (
       <div className="loader-wrapper">
         <div className="loader is-loading"></div>
@@ -21,22 +25,26 @@ const Home = () => {
     <React.Fragment>
       <Container fluid customClass="is-relative" key="test">
         <Slider
-          slides={slides}
+          slides={mainSlides}
           pagination
           navigation
           customNav
           customClass="home-hero-slider"
           type="box-full-width"
+          isMobile
         />
       </Container>
-      {/* <Container customClass="is-relative">
+      <Container customClass="is-relative">
         <Slider
-          slides={slides}
-          pagination
-          navigation
-          customClass="home-slider"
+          slides={slides1}
+          pagination          
+          customClass="home-slider my-5"
+          type="box-images"
+          grid
+          loop
+          autoplay
         />
-      </Container> */}
+      </Container>
     </React.Fragment>
   );
 

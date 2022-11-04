@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import LinkTo from "../../../../components/LinkTo/LinkTo";
 
-const BoxImages = () => {
+const BoxImages = ({ slide }) => {
   return (
-    <div>BoxImages</div>
-  )
-}
+    <LinkTo link={'/products/' + slide.id}>
+      <div className="swiper-slide-grid__wrapper">
+        <img src={slide.thumbnail} alt={slide.id} />
+      </div>
+      <p className="has-text-weight-semibold">{slide.title}</p>
+    </LinkTo>
+  );
+};
 
-export default BoxImages
+export default BoxImages;

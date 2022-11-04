@@ -1,4 +1,5 @@
-@import '../../style/index';
+@import "bulma/sass/utilities/mixins";
+@import "../../style/index";
 
 $bullet-width: 14px;
 
@@ -30,5 +31,22 @@ $bullet-width: 14px;
 
   &:hover {
     background-color: $c-red-hover;
+  }
+}
+
+.swiper-slide-grid__wrapper { 
+  height: 100vh !important;
+  max-height: 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  img {
+    height: 100%;
+    object-fit: cover;
+
+    @include desktop {
+      object-fit: contain;
+    }
   }
 }
