@@ -56,7 +56,7 @@ const Footer = () => {
             </Grid>
           </Grid>
           <Box textAlign="center" pt={{ xs: 5, sm: 10 }} pb={{ xs: 5, sm: 0 }}>
-            <LinkTo customClass="text-color-white" link="https://github.com/imicadio/e-shop"><i class="fa-brands fa-github"></i> Michał Jeszko</LinkTo>
+            <a className="text-color-white" href="https://github.com/imicadio/e-shop"><i class="fa-brands fa-github"></i> Michał Jeszko</a>
           </Box>
         </Container>
       </Box>
