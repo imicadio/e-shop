@@ -1,10 +1,11 @@
 # Eshop
 
-This project was:
+This project using:
 - [Redux/toolkit](https://redux-toolkit.js.org/)
 - [bulma](https://bulma.io/)
 - [material ui](https://mui.com/)
 - [font awesome](https://fontawesome.com/)
+- [firebase](https://firebase.google.com/)
 
 ## Components
 
