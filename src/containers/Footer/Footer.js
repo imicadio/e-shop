@@ -56,7 +56,7 @@ const Footer = () => {
             </Grid>
           </Grid>
           <Box textAlign="center" pt={{ xs: 5, sm: 10 }} pb={{ xs: 5, sm: 0 }}>
-            <a className="text-color-white" href="https://github.com/imicadio/e-shop"><i class="fa-brands fa-github"></i> Michał Jeszko</a>
+            <a className="text-color-white" href="https://github.com/imicadio/e-shop"><i className="fa-brands fa-github"></i> Michał Jeszko</a>
           </Box>
         </Container>
       </Box>

@@ -3,11 +3,11 @@ import { useScreen } from "../../hooks/useScreen";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
-import Container from "../../layout/Container/Container";
 
 import classnames from "classnames";
 import "swiper/swiper-bundle.css";
 import "./Slider.scss";
+import Box from "./Box/Box";
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
@@ -20,7 +20,8 @@ const Slider = ({
   hero,
   navigation,
   navigationName,
-  customNav
+  customNav,
+  type,
 }) => {
   const CSSclassName = classnames(customClass, {
     [`slider-grid`]: grid,
@@ -47,26 +48,32 @@ const Slider = ({
 
   const renderSlides = slides.map((slide, index) => (
     <SwiperSlide key={index}>
-      <img
-        src={slide.thumbnail}
-        alt={slide.id}
-        className="full-width"
-      />
+      <Box type={type} slide={slide} />
     </SwiperSlide>
   ));
 
-  const cssButtonPrev = customNav ? classnames('swiper-button-prev', {
-    [`custom-navigation`]: customNav
-  }) : 'swiper-button-prev';
+  const cssButtonPrev = customNav
+    ? classnames("swiper-button-prev", {
+        [`custom-navigation`]: customNav,
+      })
+    : "swiper-button-prev";
 
-  const cssButtonNext = customNav ? classnames('swiper-button-next', {
-    [`custom-navigation`]: customNav
-  }) : 'swiper-button-next';
+  const cssButtonNext = customNav
+    ? classnames("swiper-button-next", {
+        [`custom-navigation`]: customNav,
+      })
+    : "swiper-button-next";
 
   const renderNavigation = !isMobile && navigation && (
     <React.Fragment>
-      <div className={cssButtonPrev}  onClick={() => swiperRef.current.swiper.slidePrev()} ></div>
-      <div className={cssButtonNext} onClick={() => swiperRef.current.swiper.slideNext()}></div>
+      <div
+        className={cssButtonPrev}
+        onClick={() => swiperRef.current.swiper.slidePrev()}
+      ></div>
+      <div
+        className={cssButtonNext}
+        onClick={() => swiperRef.current.swiper.slideNext()}
+      ></div>
     </React.Fragment>
   );
 
@@ -75,7 +82,7 @@ const Slider = ({
       <Swiper className={CSSclassName} {...swiperParams} ref={swiperRef}>
         {renderSlides}
       </Swiper>
-      { renderNavigation }
+      {renderNavigation}
     </React.Fragment>
   );
 };

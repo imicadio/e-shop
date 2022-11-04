@@ -26,16 +26,17 @@ const Home = () => {
           navigation
           customNav
           customClass="home-hero-slider"
+          type="box-full-width"
         />
       </Container>
-      <Container customClass="is-relative">
+      {/* <Container customClass="is-relative">
         <Slider
           slides={slides}
           pagination
           navigation
           customClass="home-slider"
         />
-      </Container>
+      </Container> */}
     </React.Fragment>
   );
 
