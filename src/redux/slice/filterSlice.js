@@ -9,6 +9,7 @@ const initialState = {
   minPrice: 0,
   maxPrice: 0,
   priceMinMax: 0,
+  search: "",
 };
 
 const filterSlice = createSlice({
@@ -24,28 +25,9 @@ const filterSlice = createSlice({
     },
 
     FILTER_BY_SEARCH(state, action) {
-      const { products, search } = action.payload;
+      const { search } = action.payload;
 
-      let tmpProducts = null;
-
-      if (state.selectedBrands.length > 0) {
-        tmpProducts = products.filter(
-          (product) =>
-            product.title.toUpperCase().includes(search.toUpperCase()) &&
-            state.selectedBrands.includes(product.brand.toUpperCase()) &&
-            state.priceMinMax[0] <= product.price &&
-            product.price <= state.priceMinMax[1]
-        );
-      } else {
-        tmpProducts = products.filter(
-          (product) =>
-            product.title.toUpperCase().includes(search.toUpperCase()) &&
-            state.priceMinMax[0] <= product.price &&
-            product.price <= state.priceMinMax[1]
-        );
-      }
-
-      state.filteredProducts = tmpProducts;
+      state.search = search.toUpperCase();
     },
 
     FILTER_BY_CATEGORIES: (state, action) => {
@@ -60,6 +42,15 @@ const filterSlice = createSlice({
         tmpProducts = products.filter((product) => {
           // helper array fot valid element
           const isArrayValid = [];
+
+          if (state.search.length > 0) {
+            if (product.title.toUpperCase().includes(state.search)) {
+              isArrayValid.push(true);
+            } else {
+              isArrayValid.push(false);
+            }
+          }
+
           for (const key of keys) {
             const title = product[key].toUpperCase();
             const productPrice = product.price;
@@ -69,13 +60,28 @@ const filterSlice = createSlice({
               ? isArrayValid.push(true)
               : isArrayValid.push(false);
           }
+
           return isArrayValid.every((element) => element === true);
         });
         state.filteredProducts = tmpProducts;
       } else {
-        state.filteredProducts = products.filter(
-          (product) => price[0] <= product.price && product.price <= price[1]
-        );
+        state.filteredProducts = products.filter((product) => {
+          const isArrayValid = [];
+
+          price[0] <= product.price && product.price <= price[1]
+            ? isArrayValid.push(true)
+            : isArrayValid.push(false);
+
+          if (state.search.length > 0) {
+            if (product.title.toUpperCase().includes(state.search)) {
+              isArrayValid.push(true);
+            } else {
+              isArrayValid.push(false);
+            }
+          }
+
+          return isArrayValid.every((element) => element === true);
+        });
       }
 
       state.selectedBrands = filters.brand;
@@ -93,5 +99,6 @@ export const fetchBrands = (state) => state.filter.brands;
 export const fetchCategories = (state) => state.filter.categories;
 export const fetchMinPrice = (state) => state.filter.minPrice;
 export const fetchMaxPrice = (state) => state.filter.maxPrice;
+export const fetchSearch = (state) => state.filter.search;
 
 export default filterSlice.reducer;

@@ -21,7 +21,7 @@ const ProductsList = ({ product, isMobile, bigList }) => {
     returnProductsView(product)
   );
 
-  return <AmountContext.Provider value={{amount, setAmount, stock}}>{returnProduct}</AmountContext.Provider>;
+  return <AmountContext.Provider value={{amount, setAmount, stock, product}}>{returnProduct}</AmountContext.Provider>;
 };
 
 export default ProductsList;

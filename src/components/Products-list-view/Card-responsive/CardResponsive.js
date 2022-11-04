@@ -8,6 +8,7 @@ import { AmountContext } from "../Products-list/Products-list";
 import "./CardResponsive.scss";
 
 const CardResponsive = ({
+  id,
   title,
   description,
   price,
@@ -20,7 +21,8 @@ const CardResponsive = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
-  const brutto = useBrutto(price);
+  const link = '/products/' + id;
+  const brutto = useBrutto(price);  
 
   const amountBrutto = (amount * brutto).toFixed(2);
   const amountNetto = (amount * price).toFixed(2);
@@ -28,7 +30,7 @@ const CardResponsive = ({
   return (
     <div className="columns p-3 card-responsive__wrapper mt-3">
       <div className="block is-flex is-flex-direction-column is-justify-content-center border-bottom pb-3">
-        <LinkTo>
+        <LinkTo  link={link}>
           <h2 className="title is-5 is-uppercase has-text-weight-semibold">
             {title}
           </h2>
@@ -37,7 +39,7 @@ const CardResponsive = ({
       </div>
       <div className="columns is-mobile">
         <div className="column is-half">
-          <LinkTo customClass="column is-2 box-square">
+          <LinkTo  link={link} customClass="column is-2 box-square">
             <img src={thumbnail} alt={title} className="image-cover" />
           </LinkTo>
         </div>
@@ -45,7 +47,7 @@ const CardResponsive = ({
           <h3 className="title is-5 mb-2">{category}</h3>
           <Rating
             name="half-rating-read"
-            defaultValue={rating}
+            defaultValue={rating | ""}
             precision={0.5}
             readOnly
             size="small"

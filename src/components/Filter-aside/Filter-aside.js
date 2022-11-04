@@ -5,6 +5,8 @@ import {
   fetchCategories,
   fetchMaxPrice,
   fetchMinPrice,
+  fetchSearch,
+  FILTER_BY_SEARCH,
 } from "../../redux/slice/filterSlice";
 
 import { useScreen } from "../../hooks/useScreen";
@@ -17,6 +19,7 @@ import { FILTER_BY_CATEGORIES } from "../../redux/slice/filterSlice";
 import { fetchProducts } from "../../redux/slice/listProductSlice";
 
 import "./Filter-aside.scss";
+import Search from "../Search/Search";
 
 export const selectedFilterObject = {
   brand: [],
@@ -25,7 +28,7 @@ export const selectedFilterObject = {
 
 const FilterAside = ({ closeFilter }) => {
   const dispatch = useDispatch();
-
+  
   const [showResetBtn, setShowResetBtn] = useState(false);
   const [price, setPrice] = useState([0, 10]);
   const [selectedFilter, setSelectedFilter] = useState(selectedFilterObject);
@@ -33,6 +36,8 @@ const FilterAside = ({ closeFilter }) => {
   const products = useSelector(fetchProducts);
   const sliderMin = useSelector(fetchMinPrice);
   const sliderMax = useSelector(fetchMaxPrice);
+
+  const search = useSelector(fetchSearch);
 
   const brands = useSelector(fetchBrands);
   const categories = useSelector(fetchCategories);
@@ -55,6 +60,23 @@ const FilterAside = ({ closeFilter }) => {
     setPrice([sliderMin, sliderMax]);
     setShowResetBtn(false);
   };
+
+  const handleSearch = (event) => {
+    dispatch(FILTER_BY_SEARCH({ search: event.target.value }));
+  };
+
+  const handleClearSearch = () => {
+    dispatch(FILTER_BY_SEARCH({ search: "" }));
+  };
+
+  const searchRender = isTouch ? (
+    <Search
+      customClass="column py-0 mb-5 field is-flex is-justify-content-center is-align-items-center"
+      wordEntered={search}
+      handleSearch={handleSearch}
+      handleClear={handleClearSearch}
+    />
+  ) : null;
 
   const renderResetBtn = showResetBtn ? (
     <button
@@ -91,7 +113,7 @@ const FilterAside = ({ closeFilter }) => {
     else if (price[0] !== sliderMin || price[1] !== sliderMax)
       setShowResetBtn(true);
     else setShowResetBtn(false);
-  }, [selectedFilter, price]);
+  }, [selectedFilter, price, search]);
 
   return (
     <div className="filter-aside__wrapper">
@@ -100,6 +122,7 @@ const FilterAside = ({ closeFilter }) => {
         <i className="fa-solid fa-bars-staggered mr-2"></i>Filter
       </p>
       {renderResetBtn}
+      {searchRender}
       <AccordionFilter
         items={brands}
         handleSelect={handleSelect}

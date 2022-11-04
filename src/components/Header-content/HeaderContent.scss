@@ -1,5 +1,5 @@
 @import "bulma/sass/utilities/mixins";
-@import '../../style/index';
+@import "../../style/index";
 
 .navbar__logo {
   max-height: 40px !important;
@@ -27,4 +27,23 @@
 .header__action-bag {
   height: 100%;
   aspect-ratio: 1;
+}
+
+.cart-badge {
+  right: -10px;
+  top: -10px;
+}
+
+.badge {
+  position: absolute;  
+  min-width: 10px;
+  min-height: 10px;
+  line-height: 5px;
+  padding: 5px;
+  color: $c-white;
+  background-color: $c-red;
+  font-size: 10px;
+  border-radius: 20px;
+  border: solid 1px #c93a3a;
+  font-weight: 700;
 }

@@ -1,13 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { inputBetweenNumber } from "../../../hooks/numbers";
-import { AmountContext } from "../../Products-list-view/Products-list/Products-list";
+import { ADD_TO_CART } from "../../../redux/slice/cartSlice";
 
-const CartNormal = () => {
-  const { amount, setAmount, stock } = useContext(AmountContext);
+const CartNormal = ({ amount, setAmount, stock, product }) => {
+  const dispatch = useDispatch();
 
   const handleAmount = (e) => {
     setAmount(inputBetweenNumber(e.target.value, stock))
   };
+
+  const addToCart = () => {
+    dispatch(ADD_TO_CART({ product, amount }))
+  }
 
   return (
     <div className="card-normal__input-wrapper full-width is-flex">
@@ -40,6 +45,7 @@ const CartNormal = () => {
       <button
         type="button"
         className="button is-primary px-3 is-flex-grow-1 ml-2"
+        onClick={addToCart}
       >
         <p>
           <i className="fa-solid fa-cart-arrow-down"></i>

@@ -7,8 +7,10 @@ import { fetchProducts } from "../../redux/slice/listProductSlice";
 import ProductsListing from "../../containers/ProductsListing/ProductsListing";
 import FilterAside from "../../components/Filter-aside/Filter-aside";
 import { Stack, Pagination } from "@mui/material";
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 
 import {
+  fetchSearch,
   FILTER_BY_SEARCH,
   selectFilteredProducts,
 } from "../../redux/slice/filterSlice";
@@ -16,6 +18,7 @@ import {
 import { floorDown } from "../../hooks/numbers";
 
 import "./Products.scss";
+import LayoutAside from "../../layout/LayoutAside/LayoutAside";
 
 export const Products = () => {
   const refFilter = useRef();
@@ -24,16 +27,17 @@ export const Products = () => {
 
   const [bigList, setBigList] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [search, setSearch] = useState("");
+  const [itemsPerPage, setItemsPerPage] = useState(10);  
   const [totalPages, setTotalPages] = useState(null);
   const products = useSelector(fetchProducts);
   const filteredProducts = useSelector(selectFilteredProducts);
 
+  const search = useSelector(fetchSearch);
+
   const handleGrid = (value) => setBigList(value);
-  const hadleSearch = (value) => {
+  const hadleSearch = (event) => {
     setCurrentPage(1);
-    setSearch(value);
+    dispatch(FILTER_BY_SEARCH({ search: event.target.value }));
   };
   const handleSetItemsPerPage = (value) => {
     setItemsPerPage(value);
@@ -61,9 +65,9 @@ export const Products = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(FILTER_BY_SEARCH({ products, search }));
-  }, [dispatch, products, search]);
+  const handleClearSearch = () => {
+    dispatch(FILTER_BY_SEARCH({ search: "" }));
+  };
 
   useEffect(() => {
     const tmpTotalPages = floorDown(filteredProducts.length / itemsPerPage);
@@ -73,56 +77,63 @@ export const Products = () => {
   }, [filteredProducts]);
 
   return (
-    <Container customClass="p-5 products__wrapper position-inherit">
-      <div className="main-content columns position-inherit">
-        <div
-          ref={refFilter}
-          className="column is-3 is-hidden-touch is-hidden-desktop-only position-inherit products__filter-aside"
-        >
-          <FilterAside
-            products={filteredProducts}
-            closeFilter={handleShowFilter}
-          />
-        </div>
-        <div className="column is-9 products__content-wrapper">
-          <FilterList
-            onClickGrid={handleGrid}
-            hadleSearch={hadleSearch}
-            itemsPerPage={itemsPerPage}
-            handleItemsPerPage={handleSetItemsPerPage}
-            currentPage={currentPage}
-            handleCurrentPage={handleCurrentPage}
-            totalPages={totalPages}
-            showFilter={handleShowFilter}
-          />
-          <ProductsListing
-            products={filteredProducts}
-            isMobile={isMobile}
-            bigList={bigList}
-            currentPage={currentPage}
-            itemsPerPage={itemsPerPage}
-          />
+    <>
+      <Container customClass="p-5 products__wrapper position-inherit" breadcrumbs>
+        <LayoutAside
+          refAside={refFilter}
+          customClass="products__wrapper"
+          customClassAside="products__filter-aside"
+          aside={
+            <FilterAside
+              products={filteredProducts}
+              closeFilter={handleShowFilter}
+            />
+          }
+          customClassContent="products__content-wrapper"
+          content={
+            <React.Fragment>
+              <FilterList
+                onClickGrid={handleGrid}
+                hadleSearch={hadleSearch}
+                itemsPerPage={itemsPerPage}
+                handleItemsPerPage={handleSetItemsPerPage}
+                currentPage={currentPage}
+                handleCurrentPage={handleCurrentPage}
+                totalPages={totalPages}
+                showFilter={handleShowFilter}
+                search={search}
+                handleClearSearch={handleClearSearch}
+              />
+              <ProductsListing
+                products={filteredProducts}
+                isMobile={isMobile}
+                bigList={bigList}
+                currentPage={currentPage}
+                itemsPerPage={itemsPerPage}
+              />
 
-          {/* <ProductsList
+              {/* <ProductsList
             customClass="products-list-wrapper"
             products={fetchProducts}
             isMobile={isMobile}
             bigList={bigList}
           /> */}
-        </div>
-      </div>
 
-      {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
-        <Stack spacing={2} className="mt-5">
-          <Pagination
-            count={floorDown(filteredProducts.length / itemsPerPage)}
-            page={currentPage}
-            onChange={handlePagination}
-            className="is-flex is-justify-content-end"
-          />
-        </Stack>
-      ) : null}
-    </Container>
+              {floorDown(filteredProducts.length / itemsPerPage) > 1 ? (
+                <Stack spacing={2} className="mt-5">
+                  <Pagination
+                    count={floorDown(filteredProducts.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handlePagination}
+                    className="is-flex is-justify-content-end"
+                  />
+                </Stack>
+              ) : null}
+            </React.Fragment>
+          }
+        />
+      </Container>
+    </>
   );
 };
 

@@ -81,7 +81,7 @@ const Login = () => {
 
     if (emailError || passwordError) {
       setIsLoading(false);
-      toast.success("Enter valid data");
+      toast.error("Enter valid data");
       return setSubmitError(true);
     }
 

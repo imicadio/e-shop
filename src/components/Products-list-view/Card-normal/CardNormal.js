@@ -6,6 +6,7 @@ import { AmountContext } from "../Products-list/Products-list";
 import "./CardNormal.scss";
 
 const CardNormal = ({
+  id,
   title,
   description,
   price,
@@ -18,20 +19,21 @@ const CardNormal = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
+  const link = '/product/' + id;
   const amountPrice = price * amount;
 
   return (
     <div className="columns border-bottom card-normal__wrapper">
-      <LinkTo customClass="column is-2 box-square">
+      <LinkTo  link={link} customClass="column is-2 box-square">
         <img src={thumbnail} alt={title} className="image-cover" />
       </LinkTo>
       <div className="column is-flex is-flex-direction-column is-justify-content-center">
-        <LinkTo>
+        <LinkTo link={link}>
           <h2 className="title is-5 is-uppercase has-text-weight-semibold">
             {title}
           </h2>
         </LinkTo>
-        <LinkTo>
+        <LinkTo link={link}>
           <p className="subtitle is-6">{description}</p>
         </LinkTo>
       </div>
