@@ -40,6 +40,11 @@ This project was:
     - Table
 - Sliders - in progress
 
+## Default login 
+
+Login: test@test.com
+Password: qwert123
+
 ## Available Scripts
 
 In the project directory, you can run:
