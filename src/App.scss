@@ -13,3 +13,10 @@
     border-radius: 20px;       /* roundness of the scroll thumb */
     border: 3px solid $c-gray-e0;  /* creates padding around scroll thumb */
   }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+  }

@@ -3,9 +3,11 @@ import Container from "../../layout/Container/Container";
 import { Box, Grid, Link } from '@mui/material';
 import LinkTo from "../../components/LinkTo/LinkTo";
 
+import './Footer.scss';
+
 const Footer = () => {
   return (
-    <Container fluid element="footer">
+    <Container fluid element="footer" customClass="footer">
       <Box
         px={{ xs: 3, sm: 10 }}
         pt={{ xs: 5, sm: 10 }}       
@@ -56,7 +58,7 @@ const Footer = () => {
             </Grid>
           </Grid>
           <Box textAlign="center" pt={{ xs: 5, sm: 10 }} pb={{ xs: 5, sm: 0 }}>
-            <a className="text-color-white" href="https://github.com/imicadio/e-shop"><i class="fa-brands fa-github"></i> Michał Jeszko</a>
+            <a className="text-color-white" href="https://github.com/imicadio/e-shop"><i className="fa-brands fa-github"></i> Michał Jeszko</a>
           </Box>
         </Container>
       </Box>

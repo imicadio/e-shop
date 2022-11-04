@@ -6,6 +6,7 @@ import { useBrutto } from "../../../hooks/useBrutto";
 import { AmountContext } from "../Products-list/Products-list";
 
 import "./CardResponsive.scss";
+import ShowOnLogin from "../../ShowOnLogin/ShowOnLogin";
 
 const CardResponsive = ({
   id,
@@ -21,8 +22,8 @@ const CardResponsive = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
-  const link = '/products/' + id;
-  const brutto = useBrutto(price);  
+  const link = "/products/" + id;
+  const brutto = useBrutto(price);
 
   const amountBrutto = (amount * brutto).toFixed(2);
   const amountNetto = (amount * price).toFixed(2);
@@ -30,7 +31,7 @@ const CardResponsive = ({
   return (
     <div className="columns p-3 card-responsive__wrapper mt-3">
       <div className="block is-flex is-flex-direction-column is-justify-content-center border-bottom pb-3">
-        <LinkTo  link={link}>
+        <LinkTo link={link}>
           <h2 className="title is-5 is-uppercase has-text-weight-semibold">
             {title}
           </h2>
@@ -39,7 +40,7 @@ const CardResponsive = ({
       </div>
       <div className="columns is-mobile">
         <div className="column is-half">
-          <LinkTo  link={link} customClass="column is-2 box-square">
+          <LinkTo link={link} customClass="column is-2 box-square">
             <img src={thumbnail} alt={title} className="image-cover" />
           </LinkTo>
         </div>
@@ -71,13 +72,15 @@ const CardResponsive = ({
           </div>
         </div>
       </div>
-
-      <div className="border-top pt-3">
-        <AddToCart
-          customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center"
-          type="cart-normal"
-        />
-      </div>
+      
+      <ShowOnLogin>
+        <div className="border-top pt-3">
+          <AddToCart
+            customClass="control is-flex is-flex-direction-row is-justify-content-center is-align-items-center"
+            type="cart-normal"
+          />
+        </div>
+      </ShowOnLogin>
     </div>
   );
 };
