@@ -28,8 +28,7 @@ export const selectedFilterObject = {
 
 const FilterAside = ({ closeFilter }) => {
   const dispatch = useDispatch();
-
-  const [wordEntered, setWordEntered] = useState("");
+  
   const [showResetBtn, setShowResetBtn] = useState(false);
   const [price, setPrice] = useState([0, 10]);
   const [selectedFilter, setSelectedFilter] = useState(selectedFilterObject);
@@ -63,19 +62,17 @@ const FilterAside = ({ closeFilter }) => {
   };
 
   const handleSearch = (event) => {
-    setWordEntered(event.target.value);
-    dispatch(FILTER_BY_SEARCH({ search: event.target.value }))
+    dispatch(FILTER_BY_SEARCH({ search: event.target.value }));
   };
 
   const handleClearSearch = () => {
-    setWordEntered("");
-    dispatch(FILTER_BY_SEARCH({ search: "" }))
+    dispatch(FILTER_BY_SEARCH({ search: "" }));
   };
 
   const searchRender = isTouch ? (
     <Search
-      customClass="column is-6  py-0 mb-0 field column is-flex is-justify-content-center is-align-items-center"
-      wordEntered={wordEntered}
+      customClass="column py-0 mb-5 field is-flex is-justify-content-center is-align-items-center"
+      wordEntered={search}
       handleSearch={handleSearch}
       handleClear={handleClearSearch}
     />

@@ -10,6 +10,7 @@ import { Stack, Pagination } from "@mui/material";
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 
 import {
+  fetchSearch,
   FILTER_BY_SEARCH,
   selectFilteredProducts,
 } from "../../redux/slice/filterSlice";
@@ -26,16 +27,17 @@ export const Products = () => {
 
   const [bigList, setBigList] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [search, setSearch] = useState("");
+  const [itemsPerPage, setItemsPerPage] = useState(10);  
   const [totalPages, setTotalPages] = useState(null);
   const products = useSelector(fetchProducts);
   const filteredProducts = useSelector(selectFilteredProducts);
 
+  const search = useSelector(fetchSearch);
+
   const handleGrid = (value) => setBigList(value);
   const hadleSearch = (event) => {
     setCurrentPage(1);
-    setSearch(event.target.value);
+    dispatch(FILTER_BY_SEARCH({ search: event.target.value }));
   };
   const handleSetItemsPerPage = (value) => {
     setItemsPerPage(value);
@@ -64,12 +66,8 @@ export const Products = () => {
   };
 
   const handleClearSearch = () => {
-    setSearch("");
+    dispatch(FILTER_BY_SEARCH({ search: "" }));
   };
-
-  useEffect(() => {
-    dispatch(FILTER_BY_SEARCH({ search }));
-  }, [dispatch, products, search]);
 
   useEffect(() => {
     const tmpTotalPages = floorDown(filteredProducts.length / itemsPerPage);
