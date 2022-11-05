@@ -10,6 +10,7 @@
     "@mui/styled-engine-sc": "^5.10.6",
     "@mui/styles": "^5.10.9",
     "@reduxjs/toolkit": "^1.8.6",
+    // TODO: move testing libraries to devDependencies
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -23,8 +24,10 @@
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.2",
     "react-router-use-breadcrumbs": "^1.1.1",
+    // TODO: devDependencies
     "react-scripts": "^5.0.1",
     "react-toastify": "^9.0.8",
+    // TODO: devDependencies
     "start": "^5.1.0",
     "styled-components": "^5.3.6",
     "swiper": "^8.4.4",

@@ -4,6 +4,8 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
+
+// TODO: move to .env file
 export const firebaseConfig = {
   apiKey: "AIzaSyCF9AMT3Dxd9zYbv54IfL4fvUlouIFArTc",
   authDomain: "react-shop-dd1d1.firebaseapp.com",

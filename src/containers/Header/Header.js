@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 
-import HeaderTopBar from "../../components/Header-top-bar/HeaderTopBar";
 import HeaderContent from "../../components/Header-content/HeaderContent";
 import Navigation from "../../components/Navigation/Navigation";
 import { useProducts } from "../../hooks/realtime-db/useProducts/useProducts";
@@ -9,6 +8,7 @@ import { STORE_PRODUCTS } from "../../redux/slice/listProductSlice";
 import { FILTERS_STORE } from "../../redux/slice/filterSlice";
 
 const Header = () => {
+  // TODO: remove unused variables
   const [isLoading, loadingError, slides] = useProducts();
   const dispatch = useDispatch();
 
@@ -52,7 +52,7 @@ const Header = () => {
 
   return (
     <header>
-      <HeaderTopBar />
+      {/* <HeaderTopBar /> */}
       <HeaderContent />
       <Navigation />
     </header>
