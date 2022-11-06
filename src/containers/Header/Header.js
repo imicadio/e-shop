@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import HeaderTopBar from "../../components/Header-top-bar/HeaderTopBar";
+// import HeaderTopBar from "../../components/Header-top-bar/HeaderTopBar";
 import HeaderContent from "../../components/Header-content/HeaderContent";
 import Navigation from "../../components/Navigation/Navigation";
 import { useProducts } from "../../hooks/realtime-db/useProducts/useProducts";
@@ -52,7 +52,7 @@ const Header = () => {
 
   return (
     <header>
-      <HeaderTopBar />
+      {/* <HeaderTopBar /> */}
       <HeaderContent />
       <Navigation />
     </header>
