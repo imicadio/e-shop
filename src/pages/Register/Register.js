@@ -129,7 +129,7 @@ const Register = () => {
     const { email, password } = form;
     const { value: emailValue, error: emailvalid } = email;
     const { value: passwordValue, error: passwordvalid } = password;
-    
+
     if (emailvalid || passwordvalid) {
       setIsLoading(false);
       toast.error("Please complete fix form");

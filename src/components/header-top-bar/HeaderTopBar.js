@@ -2,7 +2,7 @@ import React from 'react'
 
 import Container from "../../layout/Container/Container";
 
-export default function HeaderTopBar() {
+const HeaderTopBar = () => {
   return (
     <div className="column bg--red">
         <Container customClass="is-size-7 has-text-centered">
@@ -17,3 +17,5 @@ export default function HeaderTopBar() {
       </div>
   )
 }
+
+export default HeaderTopBar;

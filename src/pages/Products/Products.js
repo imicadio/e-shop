@@ -7,7 +7,6 @@ import { fetchProducts } from "../../redux/slice/listProductSlice";
 import ProductsListing from "../../containers/ProductsListing/ProductsListing";
 import FilterAside from "../../components/Filter-aside/Filter-aside";
 import { Stack, Pagination } from "@mui/material";
-import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 
 import {
   fetchSearch,
