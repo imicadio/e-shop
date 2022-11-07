@@ -264,11 +264,9 @@ const Register = () => {
           />
           <p className="mt-3">
             Already an account?
-            <LinkTo
-              customClass="has-text-weight-semibold ml-2"
-              text="Login"
-              link="/login"
-            />
+            <LinkTo customClass="has-text-weight-semibold ml-2" link="/login">
+              Login
+            </LinkTo>
           </p>
         </Box>
       </Container>

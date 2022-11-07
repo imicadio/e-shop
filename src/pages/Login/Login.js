@@ -191,11 +191,9 @@ const Login = () => {
             </Button>
             <p className="mt-3">
               Forgot
-              <LinkTo
-                customClass="has-text-weight-semibold ml-2"
-                text="Password"
-                link="/reset"
-              />
+              <LinkTo customClass="has-text-weight-semibold ml-2" link="/reset">
+                password
+              </LinkTo>
               ?
             </p>
           </form>
@@ -229,9 +227,10 @@ const Login = () => {
             Dont have an account?
             <LinkTo
               customClass="has-text-weight-semibold ml-2"
-              text="Register"
               link="/register"
-            />
+            >
+              Register
+            </LinkTo>
           </p>
         </Box>
       </Container>
