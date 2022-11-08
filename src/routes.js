@@ -9,30 +9,31 @@ import {
   CheckoutDetails,
   ProductDetails,
 } from "./pages/index";
+import { ROUTE } from "./shared/routing";
 
 export default [
   {
-    path: "/",
+    path: ROUTE.HOME,
     element: <WrapperRouting />,
     children: [
       { index: true, element: <Home /> },
       {
-        path: "/products",
+        path: ROUTE.PRODUCTS,
         element: <WrapperRouting />,
         children: [
           { index: true, element: <Products /> },
           {
-            path: "/products/:id",
+            path: ROUTE.PRODUCTS_DETAIL + "/:id",
             element: <ProductDetails />,
           },
         ],
       },
-      { path: "/contact", element: <Contact /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-      { path: "/cart", element: <Cart /> },
+      { path: ROUTE.CONTACT, element: <Contact /> },
+      { path: ROUTE.LOGIN, element: <Login /> },
+      { path: ROUTE.REGISTER, element: <Register /> },
+      { path: ROUTE.CART, element: <Cart /> },
       {
-        path: "/checkout-details",
+        path: ROUTE.CHECKOUT,
         element: <CheckoutDetails />,
       },
     ],

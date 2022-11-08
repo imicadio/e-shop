@@ -11,6 +11,7 @@ import {
 } from "../../../redux/slice/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { selectIsLoggedIn } from "../../../redux/slice/authSlice";
+import { ROUTE } from "../../../shared/routing";
 
 const AsideCart = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const AsideCart = () => {
       navigate("/checkout-details");
     } else {
       dispatch(SAVE_URL(url));
-      navigate("/login");
+      navigate(ROUTE.LOGIN);
     }
   };
 

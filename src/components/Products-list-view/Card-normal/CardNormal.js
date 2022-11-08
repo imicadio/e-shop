@@ -5,6 +5,7 @@ import { AmountContext } from "../Products-list/Products-list";
 
 import "./CardNormal.scss";
 import ShowOnLogin from "../../ShowOnLogin/ShowOnLogin";
+import { ROUTE } from "../../../shared/routing";
 
 const CardNormal = ({
   id,
@@ -20,7 +21,7 @@ const CardNormal = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
-  const link = "/product/" + id;
+  const link = ROUTE.PRODUCTS_DETAIL + id;
   const amountPrice = price * amount;
 
   return (

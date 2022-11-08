@@ -4,13 +4,14 @@ import CartMinimal from "../../Add-to-cart/Cart-minimal/Cart-minimal";
 import ShowOnLogin from '../../ShowOnLogin/ShowOnLogin';
 
 import "./BoxStandard.scss";
+import { ROUTE } from "../../../shared/routing";
 
 const BoxStandard = ({ slide }) => {
   const [amount, setAmount] = useState(1);
 
   return (
     <>
-      <LinkTo link={"/products/" + slide.id}>
+      <LinkTo link={ROUTE.PRODUCTS_DETAIL + slide.id}>
         <div className="swiper-slide-grid__wrapper">
           <img src={slide.thumbnail} alt={slide.id} />
         </div>

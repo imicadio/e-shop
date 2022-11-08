@@ -14,6 +14,7 @@ import {
 } from "../../redux/slice/authSlice";
 import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
 import ShowOnLogout from "../ShowOnLogout/ShowOnLogout";
+import { ROUTE } from "../../shared/routing";
 
 const Navigation = () => {
   const [userName, setUserName] = useState("");
@@ -78,7 +79,7 @@ const Navigation = () => {
           <NavLink to="/" className="navbar-item" end>
             <i className="fa-solid fa-house-chimney text-color-red"></i>
           </NavLink>
-          <NavLink to="/products" className="navbar-item">
+          <NavLink to={ROUTE.PRODUCTS} className="navbar-item">
             Products
           </NavLink>
           <ShowOnLogin>            
@@ -87,7 +88,7 @@ const Navigation = () => {
             </div>
           </ShowOnLogin>
           <ShowOnLogout>
-            <NavLink to="/login" className="navbar-item is-hidden-desktop">
+            <NavLink to={ROUTE.LOGIN} className="navbar-item is-hidden-desktop">
               Login
             </NavLink>
           </ShowOnLogout>

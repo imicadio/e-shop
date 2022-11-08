@@ -7,6 +7,7 @@ import { AmountContext } from "../Products-list/Products-list";
 
 import "./CardBig.scss";
 import ShowOnLogin from "../../ShowOnLogin/ShowOnLogin";
+import { ROUTE } from "../../../shared/routing";
 
 const CardBig = ({
   id,
@@ -22,7 +23,7 @@ const CardBig = ({
 }) => {
   const { amount } = useContext(AmountContext);
 
-  const link = "/products/" + id;
+  const link = ROUTE.PRODUCTS_DETAIL + id;
   const brutto = useBrutto(price);
 
   const amountBrutto = (amount * brutto).toFixed(2);

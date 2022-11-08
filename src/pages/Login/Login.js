@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/Loader/Loader";
+import { ROUTE } from "../../shared/routing";
 
 const Login = () => {
   const [submitError, setSubmitError] = useState(false);
@@ -227,7 +228,7 @@ const Login = () => {
             Dont have an account?
             <LinkTo
               customClass="has-text-weight-semibold ml-2"
-              link="/register"
+              link={ROUTE.REGISTER}
             >
               Register
             </LinkTo>

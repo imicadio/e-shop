@@ -6,6 +6,7 @@ import LinkTo from "../LinkTo/LinkTo";
 import Search from "../Search/Search";
 import ShowOnLogout from "../../components/ShowOnLogout/ShowOnLogout";
 import ShowOnLogin from "../../components/ShowOnLogin/ShowOnLogin";
+import { ROUTE } from '../../shared/routing';
 
 import "./HeaderContent.scss";
 
@@ -64,7 +65,7 @@ const HeaderContent = () => {
         <div className="results">
           {filteredData.map((product) => (
             <LinkTo
-              link={"/products/" + product.id}
+              link={ROUTE.PRODUCTS_DETAIL + product.id}
               customClass="search-product__wrapper my-2"
               key={product.id}
             >
@@ -93,7 +94,7 @@ const HeaderContent = () => {
     <Container customClass="header__content">
       <div className="navbar-brand columns m-0 is-flex-wrap-wrap full-height">
         {/* LOGO */}
-        <a href="/" className="column navbar-item is-3 is-flex">
+        <a href={ROUTE.HOME} className="column navbar-item is-3 is-flex">
           <img
             src="https://bulma.io/images/bulma-logo.png"
             alt="logo"
@@ -124,19 +125,19 @@ const HeaderContent = () => {
                 Join us!
                 <LinkTo
                   customClass="has-text-weight-bold ml-1"
-                  link="/register"
+                  link={ROUTE.REGISTER}
                 >
                   Register
                 </LinkTo>
               </p>
             </div>
 
-            <LinkTo customClass="button is-primary" link="/login">
+            <LinkTo customClass="button is-primary" link={ROUTE.LOGIN}>
               Login
             </LinkTo>
           </ShowOnLogout>
           <ShowOnLogin>
-            <LinkTo link="/cart" customClass="is-relative">
+            <LinkTo link={ROUTE.CART} customClass="is-relative">
               <div className="cart-badge badge">{cartTotalQuantity}</div>
               <p>
                 Cart <i className="fa-solid fa-bag-shopping ml-2"></i>
@@ -149,7 +150,7 @@ const HeaderContent = () => {
         <div className="header__btn-actions-wrapper is-hidden-desktop column is-flex is-justify-content-end p-0">
           <ShowOnLogin>
             <LinkTo
-              link="/cart"
+              link={ROUTE.CART}
               customClass="box-square is-flex is-justify-content-center is-align-items-center"
             >
               <div className="is-relative">
