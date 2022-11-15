@@ -43,6 +43,8 @@ This project using:
 
 ## Default login 
 
+Live: https://e-shop-jvui.vercel.app/
+
 Login: test@test.com    
 
 Password: qwert123
