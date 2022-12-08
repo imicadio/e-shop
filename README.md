@@ -43,7 +43,7 @@ This project using:
 
 ## Default login 
 
-Live: https://e-shop-jvui.vercel.app/
+Live: https://e-shop-ashen.vercel.app/
 
 Login: test@test.com    
 
